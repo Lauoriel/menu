@@ -37,10 +37,47 @@
             z-index: 100;
         }
 
+        .header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .contact-header {
+            display: flex;
+            gap: 15px;
+        }
+
+        .contact-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin: 5px 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -391,7 +428,7 @@
             background: #f9f9f9;
             border-radius: 10px;
             padding: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .order-item {
@@ -411,6 +448,32 @@
             margin-top: 15px;
             padding-top: 15px;
             border-top: 2px solid #ddd;
+        }
+
+        .delivery-address {
+            margin-bottom: 20px;
+        }
+
+        .delivery-address label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .delivery-address textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .delivery-address textarea:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
         }
 
         .modal-buttons {
@@ -704,6 +767,15 @@
             .admin-link {
                 display: none;
             }
+            
+            .header-top {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .contact-header {
+                margin-top: 10px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -773,10 +845,17 @@
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-pizza-slice"></i>
-                Pizzería Delizioso
+        <div class="header-container">
+            <div class="header-top">
+                <div class="logo">
+                    <i class="fas fa-pizza-slice"></i>
+                    Pizzería Delizioso
+                </div>
+                <div class="contact-header">
+                    <button class="contact-btn" id="contact-btn">
+                        <i class="fab fa-whatsapp"></i> Contáctanos
+                    </button>
+                </div>
             </div>
             <div class="tagline">Las mejores pizzas artesanales de la ciudad</div>
         </div>
@@ -826,6 +905,11 @@
                 <div class="order-total">
                     Total: <span id="modal-total">$0</span>
                 </div>
+            </div>
+            
+            <div class="delivery-address">
+                <label for="delivery-address">Dirección de entrega:</label>
+                <textarea id="delivery-address" placeholder="Por favor ingresa tu dirección completa"></textarea>
             </div>
             
             <div class="modal-buttons">
@@ -974,6 +1058,7 @@
         const orderItemsElement = document.getElementById('order-items');
         const modalTotalElement = document.getElementById('modal-total');
         const categoriesContainer = document.getElementById('categories-container');
+        const deliveryAddress = document.getElementById('delivery-address');
         
         // Referencias a elementos nuevos
         const halfHalfModal = document.getElementById('half-half-modal');
@@ -989,6 +1074,7 @@
         const productImage = document.getElementById('product-image');
         const saveProductBtn = document.getElementById('save-product');
         const productsContainer = document.getElementById('products-container');
+        const contactBtn = document.getElementById('contact-btn');
 
         // Función para renderizar las categorías y productos
         function renderCategories() {
@@ -1245,7 +1331,14 @@
             });
             
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            message += `\nTotal: $${total.toLocaleString()}\n\n¡Gracias!`;
+            message += `\nTotal: $${total.toLocaleString()}\n`;
+            
+            // Agregar dirección si se proporcionó
+            if (deliveryAddress.value.trim()) {
+                message += `\nDirección de entrega: ${deliveryAddress.value.trim()}\n`;
+            }
+            
+            message += `\n¡Gracias!`;
             
             return message;
         }
@@ -1270,6 +1363,9 @@
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             modalTotalElement.textContent = `$${total.toLocaleString()}`;
             
+            // Limpiar dirección anterior
+            deliveryAddress.value = '';
+            
             // Mostrar el modal
             previewModal.style.display = 'flex';
         }
@@ -1285,6 +1381,13 @@
             
             // Vaciar el carrito
             clearCart();
+        }
+        
+        // Función para contactar al negocio
+        function contactBusiness() {
+            const message = encodeURIComponent('Hola, me gustaría realizar un pedido');
+            const whatsappUrl = `https://wa.me/?text=${message}`;
+            window.open(whatsappUrl, '_blank');
         }
 
         // Funciones para mitad y mitad
@@ -1559,6 +1662,9 @@
             });
             
             saveProductBtn.addEventListener('click', saveProduct);
+            
+            // Evento para contactar al negocio
+            contactBtn.addEventListener('click', contactBusiness);
             
             // Cerrar modal al hacer clic fuera
             window.addEventListener('click', (e) => {
