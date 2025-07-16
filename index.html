@@ -285,6 +285,10 @@
             justify-content: center;
         }
 
+        .add-to-cart {
+            background: var(--primary);
+        }
+
         .add-to-cart:hover {
             background: var(--primary-dark);
         }
@@ -669,6 +673,54 @@
             background: var(--primary-dark);
         }
 
+        /* Nuevos estilos para modales de opciones */
+        .custom-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .custom-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .custom-option label {
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .custom-option input {
+            width: 60px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            -webkit-appearance: none; /* Elimina estilos nativos en iOS */
+        }
+        
+        .pack-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .pack-options label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem; /* Ajuste de tamaño de fuente */
+        }
+        
+        .pack-options input[type="radio"] {
+            margin: 0;
+            min-width: 20px; /* Asegura tamaño táctil mínimo */
+            min-height: 20px; /* Asegura tamaño táctil mínimo */
+        }
+
         /* Footer */
         footer {
             background: var(--dark);
@@ -747,50 +799,6 @@
             10% { opacity: 1; transform: translateX(-50%) translateY(0); }
             90% { opacity: 1; transform: translateX(-50%) translateY(0); }
             100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
-        }
-
-        /* Nuevos estilos para modales (mantener si son necesarios para otros tipos de productos) */
-        .custom-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .custom-option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        .custom-option label {
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
-        
-        .custom-option input {
-            width: 60px;
-            padding: 5px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        .pack-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .pack-options label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .pack-options input[type="radio"] {
-            margin: 0;
         }
 
         /* Responsive */
@@ -1136,6 +1144,86 @@
         </div>
     </div>
 
+    <!-- Nuevos modales -->
+    <!-- Modal para Sandwich XL con Papas -->
+    <div class="modal-overlay" id="sandwichModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>¿Agregar papas fritas?</h3>
+                <button class="close-modal" id="closeSandwichModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Agregar papas fritas por $1500 adicionales.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="add-to-cart-modal" id="addSandwichWithout">Sin Papas</button>
+                <button class="add-to-cart-modal" id="addSandwichWith">Con Papas (+$1500)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Empanada Individual -->
+    <div class="modal-overlay" id="empanadaIndividualModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Selecciona el gusto</h3>
+                <button class="close-modal" id="closeEmpanadaIndividualModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="flavor-options" id="empanadaIndividualOptions">
+                    <div class="flavor-option" data-gusto="carne">Carne</div>
+                    <div class="flavor-option" data-gusto="pollo">Pollo</div>
+                    <div class="flavor-option" data-gusto="jamon y queso">Jamón y Queso</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="add-to-cart-modal" id="addEmpanadaIndividual">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Empanadas Docena/Media Docena -->
+    <div class="modal-overlay" id="empanadaPackModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="empanadaPackTitle">Personaliza tu pedido</h3>
+                <button class="close-modal" id="closeEmpanadaPackModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pack-options">
+                    <label><input type="radio" name="packType" value="surtidas" checked> Surtidas</label>
+                    <label><input type="radio" name="packType" value="carne"> Solo Carne</label>
+                    <label><input type="radio" name="packType" value="pollo"> Solo Pollo</label>
+                    <label><input type="radio" name="packType" value="jamon y queso"> Solo Jamón y Queso</label>
+                    <label><input type="radio" name="packType" value="personalizado"> Personalizado</label>
+                </div>
+                <div class="custom-options" id="customEmpanadasOptions" style="display: none;">
+                    <div class="custom-option">
+                        <label>Carne:</label>
+                        <input type="number" min="0" value="0" id="qtyCarne">
+                    </div>
+                    <div class="custom-option">
+                        <label>Pollo:</label>
+                        <input type="number" min="0" value="0" id="qtyPollo">
+                    </div>
+                    <div class="custom-option">
+                        <label>Jamón y Queso:</label>
+                        <input type="number" min="0" value="0" id="qtyJamonQueso">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="add-to-cart-modal" id="addEmpanadaPack">Agregar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -1190,10 +1278,9 @@
                 { id: 19, name: "Barrilete", description: "Cuatro gustos a elección de la lista", price: 15000, isBarrilete: true }
             ],
             sandwiches: [
-                { id: 20, name: "Sándwich XL Napolitano", description: "Milanesa de carne, jamón, salsa y muzzarela", price: 14500 },
-                { id: 21, name: "Sándwich XL Completo", description: "Milanesa de carne, jamón, tomate y lechuga", price: 14500 },
-                { id: 22, name: "Sándwich XL Ranchero", description: "Milanesa de carne, jamón, huevos fritos y cheddar", price: 14500 },
-                { id: 23, name: "Sándwich XL con Papas", description: "Cualquier XL con papas fritas", price: 16000 },
+                { id: 20, name: "Sándwich XL Napolitano", description: "Milanesa de carne, jamón, salsa y muzzarela", price: 14500, hasOptions: true },
+                { id: 21, name: "Sándwich XL Completo", description: "Milanesa de carne, jamón, tomate y lechuga", price: 14500, hasOptions: true },
+                { id: 22, name: "Sándwich XL Ranchero", description: "Milanesa de carne, jamón, huevos fritos y cheddar", price: 14500, hasOptions: true },
                 { id: 24, name: "Sándwich Chico Completo", description: "Milanesa de carne, jamón, tomate y lechuga", price: 6500 },
                 { id: 25, name: "Sándwich Chico Napolitano", description: "Milanesa de carne, jamón, salsa y muzzarela", price: 6500 },
                 { id: 26, name: "Napo con Papas", description: "Milanesa napolitana con papas fritas", price: 7500 }
@@ -1212,17 +1299,20 @@
                 { id: 35, name: "Super combo 5 pati", description: "5 hamburguesas con jamón, lechuga, tomate y papas fritas", price: 15000 }
             ],
             empanadas: [
-                { id: 36, name: "Docena de empanadas", description: "Carne, pollo, jamón y queso", price: 12000 },
-                { id: 37, name: "Media docena", description: "Carne, pollo, jamón y queso", price: 6500 },
-                { id: 38, name: "Empanada individual", description: "Carne, pollo, jamón o queso", price: 1200 }
+                { id: 36, name: "Docena de empanadas", description: "Personaliza tus gustos", price: 12000, hasOptions: true, packSize: 12 },
+                { id: 37, name: "Media docena", description: "Personaliza tus gustos", price: 6500, hasOptions: true, packSize: 6 },
+                { id: 38, name: "Empanada individual", description: "Selecciona el gusto", price: 1200, hasOptions: true }
             ]
         };
 
         // Variables globales
         let cart = [];
-        let currentPizza = null;
+        let currentProduct = null; // Cambiado de currentPizza a currentProduct para ser más genérico
         let selectedFlavors = [];
         let deliveryType = "delivery";
+        let selectedEmpanadaGusto = null; // Nueva variable
+        let empanadaPackType = 'surtidas'; // Nueva variable
+        let empanadaPackQuantities = { carne: 0, pollo: 0, jamonQueso: 0 }; // Nueva variable
 
         // DOM Elements
         const cartIcon = document.getElementById('cartIcon');
@@ -1265,10 +1355,33 @@
         const crossStreetsInput = document.getElementById('crossStreets');
         const notesInput = document.getElementById('notes');
 
+        // Nuevos elementos modales
+        const sandwichModal = document.getElementById('sandwichModal');
+        const closeSandwichModal = document.getElementById('closeSandwichModal');
+        const addSandwichWithout = document.getElementById('addSandwichWithout');
+        const addSandwichWith = document.getElementById('addSandwichWith');
+        
+        const empanadaIndividualModal = document.getElementById('empanadaIndividualModal');
+        const closeEmpanadaIndividualModal = document.getElementById('closeEmpanadaIndividualModal');
+        const empanadaIndividualOptions = document.getElementById('empanadaIndividualOptions');
+        const addEmpanadaIndividual = document.getElementById('addEmpanadaIndividual');
+        
+        const empanadaPackModal = document.getElementById('empanadaPackModal');
+        const empanadaPackTitle = document.getElementById('empanadaPackTitle');
+        const closeEmpanadaPackModal = document.getElementById('closeEmpanadaPackModal');
+        const packTypeRadios = document.querySelectorAll('input[name="packType"]');
+        const customEmpanadasOptions = document.getElementById('customEmpanadasOptions');
+        const qtyCarne = document.getElementById('qtyCarne');
+        const qtyPollo = document.getElementById('qtyPollo');
+        const qtyJamonQueso = document.getElementById('qtyJamonQueso');
+        const addEmpanadaPack = document.getElementById('addEmpanadaPack');
+
+
         // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
             setupEventListeners();
+            setupNewModals(); // Configurar listeners para los nuevos modales
             // Cargar carrito desde localStorage al inicio
             loadCartFromLocalStorage();
             updateCart(); // Actualizar la UI del carrito
@@ -1288,6 +1401,7 @@
                         
                         let buttonsHTML = '';
                         
+                        // Lógica para mostrar el botón "Mitad y Mitad" solo en pizzas que no son Barrilete
                         if (category === 'pizzas' && !item.isBarrilete) {
                             buttonsHTML = `
                                 <div class="product-buttons">
@@ -1374,8 +1488,20 @@
                     const product = findProduct(id, category);
                     
                     if (product) {
-                        if (product.name === "Barrilete") {
+                        if (product.isBarrilete) {
                             openBarrileteModal(product);
+                        } 
+                        // Nuevos casos para productos con opciones
+                        else if (product.hasOptions) {
+                            if (category === 'sandwiches') {
+                                openSandwichModal(product);
+                            } else if (category === 'empanadas') {
+                                if (product.id === 38) { // Empanada individual (ID 38 en el nuevo menuData)
+                                    openEmpanadaIndividualModal(product);
+                                } else { // Docena o Media Docena
+                                    openEmpanadaPackModal(product);
+                                }
+                            }
                         } else {
                             addToCart(product);
                         }
@@ -1428,6 +1554,8 @@
                 deliveryType = "delivery";
                 addressGroup.style.display = 'block';
                 crossStreetsGroup.style.display = 'block';
+                // Actualizar total para reflejar el costo de envío
+                updateCart(); 
             });
             
             pickupOption.addEventListener('click', () => {
@@ -1436,6 +1564,8 @@
                 deliveryType = "pickup";
                 addressGroup.style.display = 'none';
                 crossStreetsGroup.style.display = 'none';
+                // Actualizar total para reflejar el costo de envío (0 en este caso)
+                updateCart();
             });
             
             // Cerrar modales al hacer clic fuera
@@ -1454,7 +1584,7 @@
         }
 
         function openPizzaModal(product) {
-            currentPizza = product;
+            currentProduct = product; // Usar currentProduct
             document.getElementById('modalTitle').textContent = `Personaliza tu ${product.name}`;
             
             // Llenar las opciones de sabores
@@ -1486,7 +1616,7 @@
         }
 
         function openBarrileteModal(product) {
-            currentPizza = product;
+            currentProduct = product; // Usar currentProduct
             flavorOptions.innerHTML = '';
             selectedFlavors = [];
             
@@ -1529,7 +1659,7 @@
             }
             
             const pizzaItem = {
-                ...currentPizza,
+                ...currentProduct, // Usar currentProduct
                 options: {
                     half1,
                     half2
@@ -1548,7 +1678,7 @@
             }
             
             const pizzaItem = {
-                ...currentPizza,
+                ...currentProduct, // Usar currentProduct
                 options: {
                     flavors: [...selectedFlavors]
                 },
@@ -1559,12 +1689,178 @@
             barrileteModal.classList.remove('open');
         }
 
+        // --- Nuevas funciones para modales de opciones ---
+        function setupNewModals() {
+            // Sandwich XL modal
+            closeSandwichModal.addEventListener('click', () => sandwichModal.classList.remove('open'));
+            addSandwichWithout.addEventListener('click', () => addSandwichToCart(false));
+            addSandwichWith.addEventListener('click', () => addSandwichToCart(true));
+            
+            // Empanada individual modal
+            closeEmpanadaIndividualModal.addEventListener('click', () => empanadaIndividualModal.classList.remove('open'));
+            
+            // Selección de gusto para empanada individual
+            empanadaIndividualOptions.querySelectorAll('.flavor-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    empanadaIndividualOptions.querySelectorAll('.flavor-option').forEach(o => o.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedEmpanadaGusto = option.dataset.gusto;
+                });
+            });
+            
+            addEmpanadaIndividual.addEventListener('click', addIndividualEmpanadaToCart);
+            
+            // Empanada pack modal
+            closeEmpanadaPackModal.addEventListener('click', () => empanadaPackModal.classList.remove('open'));
+            
+            // Cambio de tipo de pack
+            packTypeRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    empanadaPackType = radio.value;
+                    customEmpanadasOptions.style.display = 
+                        empanadaPackType === 'personalizado' ? 'grid' : 'none';
+                });
+            });
+            
+            // Cambios en cantidades personalizadas
+            [qtyCarne, qtyPollo, qtyJamonQueso].forEach(input => {
+                input.addEventListener('change', validateEmpanadaPackQuantities);
+            });
+            
+            addEmpanadaPack.addEventListener('click', addEmpanadaPackToCart);
+        }
+
+        function openSandwichModal(product) {
+            currentProduct = product;
+            sandwichModal.classList.add('open');
+        }
+
+        function openEmpanadaIndividualModal(product) {
+            currentProduct = product;
+            empanadaIndividualModal.classList.add('open');
+            // Resetear selección
+            empanadaIndividualOptions.querySelectorAll('.flavor-option').forEach(o => o.classList.remove('selected'));
+            selectedEmpanadaGusto = null;
+        }
+
+        function openEmpanadaPackModal(product) {
+            currentProduct = product;
+            empanadaPackTitle.textContent = `Personaliza tu ${product.name}`;
+            empanadaPackModal.classList.add('open');
+            // Resetear valores
+            qtyCarne.value = 0;
+            qtyPollo.value = 0;
+            qtyJamonQueso.value = 0;
+            empanadaPackType = 'surtidas';
+            customEmpanadasOptions.style.display = 'none';
+            // Seleccionar opción por defecto
+            document.querySelector('input[name="packType"][value="surtidas"]').checked = true;
+        }
+
+        function addSandwichToCart(withFries) {
+            const sandwichItem = {
+                ...currentProduct,
+                displayName: withFries ? `${currentProduct.name} con Papas` : currentProduct.name,
+                price: withFries ? currentProduct.price + 1500 : currentProduct.price, // Ajuste de precio de papas
+                options: {
+                    withFries
+                }
+            };
+            
+            addToCart(sandwichItem);
+            sandwichModal.classList.remove('open');
+        }
+
+        function addIndividualEmpanadaToCart() {
+            if (!selectedEmpanadaGusto) {
+                showNotification('Por favor selecciona un gusto', 'error');
+                return;
+            }
+            
+            const empanadaItem = {
+                ...currentProduct,
+                displayName: `Empanada de ${selectedEmpanadaGusto}`,
+                options: {
+                    gusto: selectedEmpanadaGusto
+                }
+            };
+            
+            addToCart(empanadaItem);
+            empanadaIndividualModal.classList.remove('open');
+        }
+
+        function addEmpanadaPackToCart() {
+            let displayName = currentProduct.name;
+            let options = {};
+            
+            if (empanadaPackType === 'personalizado') {
+                // Validar cantidades antes de continuar
+                if (!validateEmpanadaPackQuantities()) {
+                    return;
+                }
+                
+                const total = parseInt(qtyCarne.value) + parseInt(qtyPollo.value) + parseInt(qtyJamonQueso.value);
+                
+                if (total !== currentProduct.packSize) {
+                    showNotification(`Debes seleccionar exactamente ${currentProduct.packSize} empanadas`, 'error');
+                    return;
+                }
+                
+                displayName = `${currentProduct.name} Personalizada`;
+                options = {
+                    personalizado: true,
+                    cantidades: { 
+                        carne: parseInt(qtyCarne.value), 
+                        pollo: parseInt(qtyPollo.value), 
+                        jamonQueso: parseInt(qtyJamonQueso.value) 
+                    }
+                };
+            } else {
+                displayName = `${currentProduct.name} (${empanadaPackType})`;
+                options = {
+                    tipo: empanadaPackType
+                };
+            }
+            
+            const empanadaItem = {
+                ...currentProduct,
+                displayName,
+                options
+            };
+            
+            addToCart(empanadaItem);
+            empanadaPackModal.classList.remove('open');
+        }
+
+        function validateEmpanadaPackQuantities() {
+            const total = parseInt(qtyCarne.value) + parseInt(qtyPollo.value) + parseInt(qtyJamonQueso.value);
+            const required = currentProduct.packSize;
+            
+            if (total > required) {
+                showNotification(`Has seleccionado ${total} empanadas, pero solo puedes pedir ${required}.`, 'warning');
+                return false;
+            }
+            
+            // Actualizar las cantidades seleccionadas en la variable global
+            empanadaPackQuantities = {
+                carne: parseInt(qtyCarne.value),
+                pollo: parseInt(qtyPollo.value),
+                jamonQueso: parseInt(qtyJamonQueso.value)
+            };
+            
+            return true;
+        }
+        // --- Fin de nuevas funciones para modales de opciones ---
+
+
         function addToCart(product) {
             const existingItem = cart.find(item => {
                 // Compara por ID si no tiene opciones, o por displayName si las tiene
                 if (item.options) {
+                    // Para productos con opciones, compara el displayName completo
                     return item.displayName === product.displayName;
                 } else {
+                    // Para productos sin opciones, compara solo el ID
                     return item.id === product.id;
                 }
             });
@@ -1647,7 +1943,9 @@
             // Actualizar totales
             cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
             subtotalEl.textContent = `$${subtotal.toLocaleString('es-AR')}`;
-            totalEl.textContent = `$${(subtotal + 500).toLocaleString('es-AR')}`;
+            // Calcular el total incluyendo el envío si es a domicilio
+            const deliveryCost = (deliveryType === "delivery" && subtotal > 0) ? 500 : 0; // Solo sumar envío si hay productos y es a domicilio
+            totalEl.textContent = `$${(subtotal + deliveryCost).toLocaleString('es-AR')}`;
         }
 
         function formatOptions(options) {
@@ -1655,6 +1953,19 @@
                 return `Sabores: ${options.flavors.join(', ')}`;
             } else if (options.half1 && options.half2) {
                 return `Mitad: ${options.half1}, Mitad: ${options.half2}`;
+            } else if (options.withFries !== undefined) {
+                return options.withFries ? 'Con papas fritas' : 'Sin papas fritas';
+            } else if (options.gusto) {
+                return `Gusto: ${options.gusto}`;
+            } else if (options.tipo) {
+                return `Tipo: ${options.tipo}`;
+            } else if (options.personalizado) {
+                const cantidades = options.cantidades;
+                let desc = [];
+                if (cantidades.carne > 0) desc.push(`${cantidades.carne} carne`);
+                if (cantidades.pollo > 0) desc.push(`${cantidades.pollo} pollo`);
+                if (cantidades.jamonQueso > 0) desc.push(`${cantidades.jamonQueso} jamón y queso`);
+                return `Personalizado: ${desc.join(', ')}`;
             }
             return '';
         }
@@ -1737,10 +2048,14 @@
             
             cart.forEach(item => {
                 message += `- ${item.displayName || item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString('es-AR')}\n`;
+                if (item.options) {
+                    message += `  (${formatOptions(item.options)})\n`; // Añadir opciones en una nueva línea indentada
+                }
             });
             
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const total = subtotal + (deliveryType === "delivery" ? 500 : 0); // Sumar envío solo si es a domicilio
+            const deliveryCost = (deliveryType === "delivery" && subtotal > 0) ? 500 : 0;
+            const total = subtotal + deliveryCost;
             
             message += `\n*Subtotal:* $${subtotal.toLocaleString('es-AR')}\n`;
             if (deliveryType === "delivery") {
