@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Menú Don Dionisio - Pizzería</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #e74c3c;
@@ -130,7 +130,7 @@
         }
 
         .hamburger {
-            display: none;
+            display: none; /* Oculto por defecto, se mostrará en media query */
             cursor: pointer;
             font-size: 1.5rem;
             padding: 10px;
@@ -227,9 +227,9 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             padding: 20px;
-            display: flex; /* Nuevo */
-            flex-direction: column; /* Nuevo */
-            min-height: 320px; /* Nuevo: altura mínima */
+            display: flex;
+            flex-direction: column;
+            min-height: 320px;
         }
 
         .product-card:hover {
@@ -238,9 +238,9 @@
 
         .product-info {
             padding: 0;
-            display: flex; /* Nuevo */
-            flex-direction: column; /* Nuevo */
-            flex-grow: 1; /* Nuevo: ocupa espacio disponible */
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
 
         .product-title {
@@ -254,7 +254,7 @@
             font-size: 0.85rem;
             min-height: 50px;
             margin-bottom: 15px;
-            flex-grow: 1; /* Nuevo: ocupa espacio restante */
+            flex-grow: 1;
         }
 
         .product-footer {
@@ -274,8 +274,8 @@
             display: flex;
             gap: 8px;
             margin-top: 15px;
-            margin-top: auto; /* Nuevo: empuja hacia abajo */
-            padding-top: 10px; /* Nuevo: espacio arriba */
+            margin-top: auto;
+            padding-top: 10px;
         }
 
         .add-to-cart, .half-half-btn {
@@ -814,35 +814,36 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            /* Siempre mostrar el menú de navegación en móvil */
             .hamburger {
-                display: block;
+                display: none; /* Ocultamos el ícono de hamburguesa ya que el menú siempre estará visible */
             }
             
-            .nav-menu {
-                flex-direction: column;
-                padding: 10px 0;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--primary);
-                transform: translateY(-100%);
-                opacity: 0;
-                pointer-events: none;
-                transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            nav {
+                padding: 5px 0; /* Reducir el padding de la barra de navegación */
             }
 
-            .nav-menu.open {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: all;
+            .nav-menu {
+                flex-direction: row; /* Mantener en fila */
+                flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
+                justify-content: center; /* Centrar los elementos */
+                padding: 0; /* Eliminar padding extra */
+                position: static; /* Eliminar posicionamiento absoluto */
+                transform: none; /* Eliminar transformaciones */
+                opacity: 1; /* Asegurar visibilidad */
+                pointer-events: all; /* Asegurar interactividad */
             }
-            
+
             .nav-menu li {
-                width: 100%;
+                width: auto; /* Ancho automático */
                 text-align: center;
-                margin-bottom: 5px;
-                padding: 10px;
+                margin: 2px 5px; /* Espacio reducido entre elementos */
+                padding: 5px 8px; /* Padding reducido para los botones */
+            }
+
+            .nav-menu li a {
+                font-size: 0.8rem; /* Tamaño de fuente más pequeño */
+                padding: 5px; /* Padding reducido para el texto del enlace */
             }
             
             .products-grid {
@@ -1001,6 +1002,7 @@
                         <i class="fas fa-shopping-cart fa-2x"></i>
                         <span class="cart-count">0</span>
                     </div>
+                    <!-- El botón de hamburguesa se mantiene en el HTML, pero su display se controla por CSS -->
                     <div class="hamburger" id="hamburger">
                         <i class="fas fa-bars fa-2x"></i>
                     </div>
@@ -1488,10 +1490,10 @@
             }
         }
 
-        // Función para alternar el menú de navegación
+        // Función para alternar el menú de navegación (ya no es necesario para el menú principal)
         function toggleNavMenu(event) {
-            event.stopPropagation();
-            navMenu.classList.toggle('open');
+            // Esta función ya no es necesaria para el menú principal, ya que siempre estará visible.
+            // Podría usarse si se reintroduce un menú desplegable para otras funcionalidades.
         }
 
         // Configurar event listeners
@@ -1501,11 +1503,12 @@
                 window.open('https://wa.me/5491138309066', '_blank');
             });
             
-            // Menú hamburguesa
-            hamburger.addEventListener('click', toggleNavMenu);
-            hamburger.addEventListener('touchstart', toggleNavMenu);
+            // Menú hamburguesa (ya no es necesario para el menú principal)
+            // hamburger.addEventListener('click', toggleNavMenu);
+            // hamburger.addEventListener('touchstart', toggleNavMenu);
 
-            // Cerrar menú al hacer clic/tocar fuera de él
+            // Cerrar menú al hacer clic/tocar fuera de él (ya no es necesario para el menú principal)
+            /*
             document.addEventListener('click', (e) => {
                 if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('open')) {
                     navMenu.classList.remove('open');
@@ -1516,11 +1519,13 @@
                     navMenu.classList.remove('open');
                 }
             });
+            */
             
             // Cerrar menú al hacer clic en un elemento de la lista de navegación
             navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    navMenu.classList.remove('open');
+                item.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevenir el comportamiento por defecto del enlace
+                    // navMenu.classList.remove('open'); // Ya no es necesario cerrar el menú
                     const category = item.dataset.category;
                     navItems.forEach(i => i.classList.remove('active'));
                     item.classList.add('active');
@@ -1535,7 +1540,7 @@
                 });
                 item.addEventListener('touchstart', (e) => {
                     e.preventDefault(); 
-                    navMenu.classList.remove('open');
+                    // navMenu.classList.remove('open'); // Ya no es necesario cerrar el menú
                     const category = item.dataset.category;
                     navItems.forEach(i => i.classList.remove('active'));
                     item.classList.add('active');
