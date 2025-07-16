@@ -1433,6 +1433,12 @@
             }
         }
 
+        // Función para alternar el menú de navegación
+        function toggleNavMenu(event) {
+            event.stopPropagation(); // Evita que el evento se propague y cierre el menú inmediatamente
+            navMenu.classList.toggle('open');
+        }
+
         // Configurar event listeners
         function setupEventListeners() {
             // Botón de WhatsApp
@@ -1441,18 +1447,22 @@
             });
             
             // Menú hamburguesa
-            hamburger.addEventListener('click', () => {
-                navMenu.classList.toggle('open');
-            });
+            hamburger.addEventListener('click', toggleNavMenu);
+            hamburger.addEventListener('touchstart', toggleNavMenu); // Añadir touchstart para iOS
 
-            // Cerrar menú al hacer clic fuera de él
+            // Cerrar menú al hacer clic/tocar fuera de él
             document.addEventListener('click', (e) => {
                 if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('open')) {
                     navMenu.classList.remove('open');
                 }
             });
+            document.addEventListener('touchstart', (e) => { // Añadir touchstart para cerrar
+                if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('open')) {
+                    navMenu.classList.remove('open');
+                }
+            });
             
-            // Cerrar menú al hacer clic en un elemento
+            // Cerrar menú al hacer clic en un elemento de la lista de navegación
             navItems.forEach(item => {
                 item.addEventListener('click', () => {
                     navMenu.classList.remove('open');
@@ -1465,6 +1475,23 @@
                         if (section.id === category) {
                             section.classList.add('active');
                             // Scroll suave al inicio de la sección
+                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+                // También añadir touchstart para los elementos del menú para asegurar el cierre
+                item.addEventListener('touchstart', (e) => {
+                    // Prevenir el comportamiento por defecto para evitar el "ghost click"
+                    e.preventDefault(); 
+                    navMenu.classList.remove('open');
+                    const category = item.dataset.category;
+                    navItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    categorySections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === category) {
+                            section.classList.add('active');
                             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
                     });
