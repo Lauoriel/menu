@@ -34,7 +34,7 @@
             color: #333;
             line-height: 1.6;
             overflow-x: hidden;
-            -webkit-text-size-adjust: 100%; /* Previene el ajuste de tamaño de texto en iOS */
+            -webkit-text-size-adjust: 100%;
         }
 
         .container {
@@ -91,9 +91,9 @@
             padding: 8px 12px;
             border-radius: 30px;
             transition: all 0.3s ease;
-            min-width: 44px; /* Asegura tamaño táctil mínimo */
-            min-height: 44px; /* Asegura tamaño táctil mínimo */
-            justify-content: center; /* Centra contenido si el padding es grande */
+            min-width: 44px;
+            min-height: 44px;
+            justify-content: center;
         }
 
         .whatsapp-icon {
@@ -172,8 +172,8 @@
             text-transform: uppercase;
             font-size: 0.9rem;
             letter-spacing: 1px;
-            display: block; /* Hace que todo el li sea clickeable */
-            padding: 5px; /* Aumenta el área táctil del enlace */
+            display: block;
+            padding: 5px;
         }
 
         /* Menu Sections */
@@ -227,6 +227,9 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             padding: 20px;
+            display: flex; /* Nuevo */
+            flex-direction: column; /* Nuevo */
+            min-height: 320px; /* Nuevo: altura mínima */
         }
 
         .product-card:hover {
@@ -235,6 +238,9 @@
 
         .product-info {
             padding: 0;
+            display: flex; /* Nuevo */
+            flex-direction: column; /* Nuevo */
+            flex-grow: 1; /* Nuevo: ocupa espacio disponible */
         }
 
         .product-title {
@@ -246,8 +252,9 @@
         .product-description {
             color: var(--gray);
             font-size: 0.85rem;
-            min-height: 50px; /* Mantiene el espacio para la descripción */
+            min-height: 50px;
             margin-bottom: 15px;
+            flex-grow: 1; /* Nuevo: ocupa espacio restante */
         }
 
         .product-footer {
@@ -266,23 +273,25 @@
         .product-buttons {
             display: flex;
             gap: 8px;
-            margin-top: 15px; /* Espacio entre precio y botones */
+            margin-top: 15px;
+            margin-top: auto; /* Nuevo: empuja hacia abajo */
+            padding-top: 10px; /* Nuevo: espacio arriba */
         }
 
         .add-to-cart, .half-half-btn {
-            flex: 1; /* Hace que los botones ocupen el espacio disponible */
+            flex: 1;
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 15px; /* Aumenta el padding para mejor área táctil */
+            padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: 500;
             transition: background 0.3s ease;
             font-size: 0.9rem;
             white-space: nowrap;
-            min-height: 44px; /* Asegura tamaño táctil mínimo */
-            display: flex; /* Para centrar el texto verticalmente */
+            min-height: 44px;
+            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -338,8 +347,8 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            width: 44px; /* Asegura tamaño táctil mínimo */
-            height: 44px; /* Asegura tamaño táctil mínimo */
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -362,12 +371,12 @@
             margin-bottom: 15px;
             padding-bottom: 15px;
             border-bottom: 1px solid #eee;
-            align-items: flex-start; /* Alinea elementos al inicio */
+            align-items: flex-start;
         }
 
         .cart-item-info {
             flex-grow: 1;
-            padding-right: 10px; /* Espacio entre info y botón de remover */
+            padding-right: 10px;
         }
 
         .cart-item-title {
@@ -396,8 +405,8 @@
         }
 
         .quantity-btn {
-            width: 30px; /* Aumenta el tamaño del botón */
-            height: 30px; /* Aumenta el tamaño del botón */
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             border: 1px solid var(--gray);
             background: white;
@@ -406,8 +415,8 @@
             justify-content: center;
             cursor: pointer;
             font-size: 1rem;
-            min-width: 30px; /* Asegura tamaño táctil mínimo */
-            min-height: 30px; /* Asegura tamaño táctil mínimo */
+            min-width: 30px;
+            min-height: 30px;
         }
 
         .cart-item-remove {
@@ -415,11 +424,11 @@
             background: none;
             border: none;
             cursor: pointer;
-            align-self: center; /* Centra verticalmente con el item */
+            align-self: center;
             padding: 5px;
-            font-size: 1.2rem; /* Aumenta el tamaño del icono */
-            min-width: 44px; /* Asegura tamaño táctil mínimo */
-            min-height: 44px; /* Asegura tamaño táctil mínimo */
+            font-size: 1.2rem;
+            min-width: 44px;
+            min-height: 44px;
         }
 
         .cart-total {
@@ -443,7 +452,7 @@
 
         .checkout-btn {
             width: 100%;
-            padding: 15px; /* Aumenta el padding */
+            padding: 15px;
             background: var(--success);
             color: white;
             border: none;
@@ -453,7 +462,7 @@
             margin-top: 12px;
             cursor: pointer;
             transition: background 0.3s ease;
-            min-height: 48px; /* Asegura tamaño táctil mínimo */
+            min-height: 48px;
         }
 
         .checkout-btn:hover {
@@ -490,7 +499,7 @@
             max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            display: flex; /* Usa flexbox para el contenido del modal */
+            display: flex;
             flex-direction: column;
         }
 
@@ -512,8 +521,8 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            width: 44px; /* Asegura tamaño táctil mínimo */
-            height: 44px; /* Asegura tamaño táctil mínimo */
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -521,8 +530,8 @@
 
         .modal-body {
             padding: 15px;
-            flex-grow: 1; /* Permite que el cuerpo crezca y el footer se quede abajo */
-            overflow-y: auto; /* Permite scroll si el contenido es muy largo */
+            flex-grow: 1;
+            overflow-y: auto;
         }
 
         .delivery-options {
@@ -539,7 +548,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            min-height: 80px; /* Asegura un tamaño táctil decente */
+            min-height: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -565,21 +574,21 @@
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
-            font-size: 0.95rem; /* Ajuste de tamaño de fuente */
+            font-size: 0.95rem;
         }
 
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 12px; /* Aumenta el padding */
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
-            -webkit-appearance: none; /* Elimina estilos nativos en iOS */
+            -webkit-appearance: none;
         }
 
         .form-group textarea {
             min-height: 80px;
-            resize: vertical; /* Permite redimensionar verticalmente */
+            resize: vertical;
         }
 
         .form-group .optional {
@@ -613,8 +622,8 @@
             border-radius: 5px;
             border: 1px solid #ddd;
             font-size: 0.9rem;
-            -webkit-appearance: none; /* Elimina estilos nativos en iOS */
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16.1%208.1-3.9%204.9-4.7%2011.4-2.1%2017.1l139.5%20200.8c3.3%204.7%208.8%207.7%2014.9%207.7s11.5-3%2014.9-7.7L289.5%2094.3c2.6-5.7%201.8-12.2-2.1-17.1z%22%2F%3E%3C%2Fsvg%3E'); /* Flecha personalizada */
+            -webkit-appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16.1%208.1-3.9%204.9-4.7%2011.4-2.1%2017.1l139.5%20200.8c3.3%204.7%208.8%207.7%2014.9%207.7s11.5-3%2014.9-7.7L289.5%2094.3c2.6-5.7%201.8-12.2-2.1-17.1z%22%2F%3E%3C%2Fsvg%3E');
             background-repeat: no-repeat;
             background-position: right 0.7em top 50%, 0 0;
             background-size: 0.65em auto, 100%;
@@ -623,19 +632,19 @@
         .flavor-options {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 10px; /* Aumenta el gap */
+            gap: 10px;
             margin-top: 15px;
         }
 
         .flavor-option {
-            padding: 10px; /* Aumenta el padding */
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             cursor: pointer;
             text-align: center;
             transition: all 0.2s ease;
             font-size: 0.85rem;
-            min-height: 44px; /* Asegura tamaño táctil mínimo */
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -655,20 +664,20 @@
             position: sticky;
             bottom: 0;
             background: white;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05); /* Sombra para destacar el footer */
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
 
         .add-to-cart-modal {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 20px; /* Aumenta el padding */
+            padding: 12px 20px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: 500;
             transition: background 0.3s ease;
             font-size: 1rem;
-            min-height: 48px; /* Asegura tamaño táctil mínimo */
+            min-height: 48px;
         }
 
         .add-to-cart-modal:hover {
@@ -700,7 +709,7 @@
             text-align: center;
             border: 1px solid #ddd;
             border-radius: 5px;
-            -webkit-appearance: none; /* Elimina estilos nativos en iOS */
+            -webkit-appearance: none;
         }
         
         .pack-options {
@@ -714,13 +723,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.95rem; /* Ajuste de tamaño de fuente */
+            font-size: 0.95rem;
         }
         
         .pack-options input[type="radio"] {
             margin: 0;
-            min-width: 20px; /* Asegura tamaño táctil mínimo */
-            min-height: 20px; /* Asegura tamaño táctil mínimo */
+            min-width: 20px;
+            min-height: 20px;
         }
 
         /* Footer */
@@ -755,17 +764,17 @@
         }
 
         .social-icon {
-            width: 40px; /* Aumenta el tamaño del icono */
-            height: 40px; /* Aumenta el tamaño del icono */
+            width: 40px;
+            height: 40px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: background 0.3s ease;
-            font-size: 1.1rem; /* Aumenta el tamaño del icono */
-            min-width: 44px; /* Asegura tamaño táctil mínimo */
-            min-height: 44px; /* Asegura tamaño táctil mínimo */
+            font-size: 1.1rem;
+            min-width: 44px;
+            min-height: 44px;
         }
 
         .social-icon:hover {
@@ -792,8 +801,8 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             z-index: 3000;
             animation: fadeInOut 3s forwards;
-            white-space: nowrap; /* Evita que el texto se rompa */
-            font-size: 0.95rem; /* Ajuste de tamaño de fuente */
+            white-space: nowrap;
+            font-size: 0.95rem;
         }
 
         @keyframes fadeInOut {
@@ -812,14 +821,14 @@
             .nav-menu {
                 flex-direction: column;
                 padding: 10px 0;
-                position: absolute; /* Para que el menú se deslice */
-                top: 100%; /* Debajo del header */
+                position: absolute;
+                top: 100%;
                 left: 0;
                 width: 100%;
                 background-color: var(--primary);
-                transform: translateY(-100%); /* Oculto por defecto */
+                transform: translateY(-100%);
                 opacity: 0;
-                pointer-events: none; /* No interactuable cuando está oculto */
+                pointer-events: none;
                 transition: transform 0.3s ease-out, opacity 0.3s ease-out;
             }
 
@@ -853,8 +862,17 @@
             }
             
             .product-buttons {
-                flex-direction: column; /* Botones apilados en móviles */
-                gap: 10px; /* Aumenta el espacio entre botones */
+                flex-direction: row; /* Botones en fila */
+                flex-wrap: wrap; /* Permite envolver */
+                gap: 10px;
+                margin-top: auto; /* Empuja hacia abajo */
+                padding-top: 10px; /* Espacio arriba */
+            }
+
+            .add-to-cart, .half-half-btn {
+                flex: 1 1 45%; /* Tamaño flexible */
+                min-width: 120px; /* Ancho mínimo para tacto */
+                margin-bottom: 8px; /* Espacio entre filas */
             }
 
             .header-right {
@@ -862,7 +880,25 @@
             }
 
             .whatsapp-icon span {
-                display: none; /* Oculta el texto "Mensaje directo" en móviles */
+                display: none;
+            }
+
+            /* Nuevos estilos para tarjetas */
+            .product-card {
+                min-height: 320px; /* Altura mínima */
+                display: flex;
+                flex-direction: column;
+            }
+
+            .product-info {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+
+            .product-description {
+                flex-grow: 1; /* Ocupa espacio restante */
+                min-height: 60px; /* Altura mínima */
             }
         }
         
@@ -872,7 +908,7 @@
             }
             
             .products-grid {
-                grid-template-columns: 1fr; /* Una columna en pantallas muy pequeñas */
+                grid-template-columns: 1fr;
                 gap: 15px;
             }
             
@@ -881,11 +917,11 @@
             }
             
             .half-pizza-options {
-                flex-direction: column; /* Opciones de mitad y mitad apiladas */
+                flex-direction: column;
             }
             
             .flavor-options {
-                grid-template-columns: 1fr; /* Sabores apilados */
+                grid-template-columns: 1fr;
             }
             
             .footer-content {
@@ -897,15 +933,25 @@
             }
             
             .option-select {
-                padding: 10px; /* Asegura buen padding */
+                padding: 10px;
             }
 
             .delivery-options {
-                flex-direction: column; /* Opciones de entrega apiladas */
+                flex-direction: column;
             }
 
             .cart-item-remove {
-                align-self: flex-start; /* Alinea el botón de remover al inicio */
+                align-self: flex-start;
+            }
+
+            /* Ajustes para botones en móviles pequeños */
+            .product-buttons {
+                flex-direction: column; /* Botones apilados */
+            }
+
+            .add-to-cart, .half-half-btn {
+                flex: 1 1 100%; /* Ocupan todo el ancho */
+                width: 100%;
             }
         }
         
@@ -920,15 +966,15 @@
         @supports (-webkit-touch-callout: none) {
             .nav-menu li a {
                 -webkit-tap-highlight-color: transparent;
-                padding: 12px; /* Larger tap area */
+                padding: 12px;
             }
             .hamburger i {
-                pointer-events: none; /* Prevent icon from blocking taps */
+                pointer-events: none;
             }
         }
         @supports (-webkit-touch-callout: none) {
             .add-to-cart, .half-half-btn, .add-to-cart-modal, .checkout-btn, .quantity-btn {
-                /* Padding ya ajustado en estilos generales para mejor área táctil */
+                /* Padding ya ajustado */
             }
             
             .modal {
@@ -1318,12 +1364,12 @@
 
         // Variables globales
         let cart = [];
-        let currentProduct = null; // Cambiado de currentPizza a currentProduct para ser más genérico
+        let currentProduct = null;
         let selectedFlavors = [];
         let deliveryType = "delivery";
-        let selectedEmpanadaGusto = null; // Nueva variable
-        let empanadaPackType = 'surtidas'; // Nueva variable
-        let empanadaPackQuantities = { carne: 0, pollo: 0, jamonQueso: 0 }; // Nueva variable
+        let selectedEmpanadaGusto = null;
+        let empanadaPackType = 'surtidas';
+        let empanadaPackQuantities = { carne: 0, pollo: 0, jamonQueso: 0 };
 
         // DOM Elements
         const cartIcon = document.getElementById('cartIcon');
@@ -1392,10 +1438,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
             setupEventListeners();
-            setupNewModals(); // Configurar listeners para los nuevos modales
-            // Cargar carrito desde localStorage al inicio
+            setupNewModals();
             loadCartFromLocalStorage();
-            updateCart(); // Actualizar la UI del carrito
+            updateCart();
         });
 
         // Renderizar el menú
@@ -1412,7 +1457,6 @@
                         
                         let buttonsHTML = '';
                         
-                        // Lógica para mostrar el botón "Mitad y Mitad" solo en pizzas que no son Barrilete
                         if (category === 'pizzas' && !item.isBarrilete) {
                             buttonsHTML = `
                                 <div class="product-buttons">
@@ -1446,7 +1490,7 @@
 
         // Función para alternar el menú de navegación
         function toggleNavMenu(event) {
-            event.stopPropagation(); // Evita que el evento se propague y cierre el menú inmediatamente
+            event.stopPropagation();
             navMenu.classList.toggle('open');
         }
 
@@ -1459,7 +1503,7 @@
             
             // Menú hamburguesa
             hamburger.addEventListener('click', toggleNavMenu);
-            hamburger.addEventListener('touchstart', toggleNavMenu); // Añadir touchstart para iOS
+            hamburger.addEventListener('touchstart', toggleNavMenu);
 
             // Cerrar menú al hacer clic/tocar fuera de él
             document.addEventListener('click', (e) => {
@@ -1467,7 +1511,7 @@
                     navMenu.classList.remove('open');
                 }
             });
-            document.addEventListener('touchstart', (e) => { // Añadir touchstart para cerrar
+            document.addEventListener('touchstart', (e) => {
                 if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('open')) {
                     navMenu.classList.remove('open');
                 }
@@ -1485,14 +1529,11 @@
                         section.classList.remove('active');
                         if (section.id === category) {
                             section.classList.add('active');
-                            // Scroll suave al inicio de la sección
                             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
                     });
                 });
-                // También añadir touchstart para los elementos del menú para asegurar el cierre
                 item.addEventListener('touchstart', (e) => {
-                    // Prevenir el comportamiento por defecto para evitar el "ghost click"
                     e.preventDefault(); 
                     navMenu.classList.remove('open');
                     const category = item.dataset.category;
@@ -1529,14 +1570,13 @@
                         if (product.isBarrilete) {
                             openBarrileteModal(product);
                         } 
-                        // Nuevos casos para productos con opciones
                         else if (product.hasOptions) {
                             if (category === 'sandwiches') {
                                 openSandwichModal(product);
                             } else if (category === 'empanadas') {
-                                if (product.id === 38) { // Empanada individual (ID 38 en el nuevo menuData)
+                                if (product.id === 38) {
                                     openEmpanadaIndividualModal(product);
-                                } else { // Docena o Media Docena
+                                } else {
                                     openEmpanadaPackModal(product);
                                 }
                             }
@@ -1592,7 +1632,6 @@
                 deliveryType = "delivery";
                 addressGroup.style.display = 'block';
                 crossStreetsGroup.style.display = 'block';
-                // Actualizar total para reflejar el costo de envío
                 updateCart(); 
             });
             
@@ -1602,7 +1641,6 @@
                 deliveryType = "pickup";
                 addressGroup.style.display = 'none';
                 crossStreetsGroup.style.display = 'none';
-                // Actualizar total para reflejar el costo de envío (0 en este caso)
                 updateCart();
             });
             
@@ -1622,14 +1660,13 @@
         }
 
         function openPizzaModal(product) {
-            currentProduct = product; // Usar currentProduct
+            currentProduct = product;
             document.getElementById('modalTitle').textContent = `Personaliza tu ${product.name}`;
             
             // Llenar las opciones de sabores
             half1Select.innerHTML = '';
             half2Select.innerHTML = '';
             
-            // Añadir una opción por defecto
             const defaultOption = document.createElement('option');
             defaultOption.value = "";
             defaultOption.textContent = "Selecciona un sabor";
@@ -1654,7 +1691,7 @@
         }
 
         function openBarrileteModal(product) {
-            currentProduct = product; // Usar currentProduct
+            currentProduct = product;
             flavorOptions.innerHTML = '';
             selectedFlavors = [];
             
@@ -1697,7 +1734,7 @@
             }
             
             const pizzaItem = {
-                ...currentProduct, // Usar currentProduct
+                ...currentProduct,
                 options: {
                     half1,
                     half2
@@ -1716,7 +1753,7 @@
             }
             
             const pizzaItem = {
-                ...currentProduct, // Usar currentProduct
+                ...currentProduct,
                 options: {
                     flavors: [...selectedFlavors]
                 },
@@ -1776,7 +1813,6 @@
         function openEmpanadaIndividualModal(product) {
             currentProduct = product;
             empanadaIndividualModal.classList.add('open');
-            // Resetear selección
             empanadaIndividualOptions.querySelectorAll('.flavor-option').forEach(o => o.classList.remove('selected'));
             selectedEmpanadaGusto = null;
         }
@@ -1785,13 +1821,11 @@
             currentProduct = product;
             empanadaPackTitle.textContent = `Personaliza tu ${product.name}`;
             empanadaPackModal.classList.add('open');
-            // Resetear valores
             qtyCarne.value = 0;
             qtyPollo.value = 0;
             qtyJamonQueso.value = 0;
             empanadaPackType = 'surtidas';
             customEmpanadasOptions.style.display = 'none';
-            // Seleccionar opción por defecto
             document.querySelector('input[name="packType"][value="surtidas"]').checked = true;
         }
 
@@ -1799,7 +1833,7 @@
             const sandwichItem = {
                 ...currentProduct,
                 displayName: withFries ? `${currentProduct.name} con Papas` : currentProduct.name,
-                price: withFries ? currentProduct.price + 1500 : currentProduct.price, // Ajuste de precio de papas
+                price: withFries ? currentProduct.price + 1500 : currentProduct.price,
                 options: {
                     withFries
                 }
@@ -1832,7 +1866,6 @@
             let options = {};
             
             if (empanadaPackType === 'personalizado') {
-                // Validar cantidades antes de continuar
                 if (!validateEmpanadaPackQuantities()) {
                     return;
                 }
@@ -1879,7 +1912,6 @@
                 return false;
             }
             
-            // Actualizar las cantidades seleccionadas en la variable global
             empanadaPackQuantities = {
                 carne: parseInt(qtyCarne.value),
                 pollo: parseInt(qtyPollo.value),
@@ -1893,12 +1925,9 @@
 
         function addToCart(product) {
             const existingItem = cart.find(item => {
-                // Compara por ID si no tiene opciones, o por displayName si las tiene
                 if (item.options) {
-                    // Para productos con opciones, compara el displayName completo
                     return item.displayName === product.displayName;
                 } else {
-                    // Para productos sin opciones, compara solo el ID
                     return item.id === product.id;
                 }
             });
@@ -1914,7 +1943,7 @@
             }
             
             updateCart();
-            saveCartToLocalStorage(); // Guardar carrito
+            saveCartToLocalStorage();
             showNotification(`${product.displayName || product.name} agregado al carrito`);
         }
 
@@ -1925,7 +1954,7 @@
                 cartItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
                 cartCount.textContent = '0';
                 subtotalEl.textContent = '$0';
-                totalEl.textContent = '$500'; // Asumiendo que el envío es fijo incluso con carrito vacío para mostrar el total inicial
+                totalEl.textContent = '$500';
                 return;
             }
             
@@ -1973,7 +2002,7 @@
             // Event listeners para botones de eliminar
             document.querySelectorAll('.cart-item-remove').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const index = parseInt(e.currentTarget.dataset.index); // Usar currentTarget para el botón
+                    const index = parseInt(e.currentTarget.dataset.index);
                     removeFromCart(index);
                 });
             });
@@ -1981,8 +2010,7 @@
             // Actualizar totales
             cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
             subtotalEl.textContent = `$${subtotal.toLocaleString('es-AR')}`;
-            // Calcular el total incluyendo el envío si es a domicilio
-            const deliveryCost = (deliveryType === "delivery" && subtotal > 0) ? 500 : 0; // Solo sumar envío si hay productos y es a domicilio
+            const deliveryCost = (deliveryType === "delivery" && subtotal > 0) ? 500 : 0;
             totalEl.textContent = `$${(subtotal + deliveryCost).toLocaleString('es-AR')}`;
         }
 
@@ -2016,22 +2044,22 @@
             }
             
             updateCart();
-            saveCartToLocalStorage(); // Guardar carrito
+            saveCartToLocalStorage();
         }
 
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCart();
-            saveCartToLocalStorage(); // Guardar carrito
+            saveCartToLocalStorage();
         }
 
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = 'notification';
             if (type === 'error') {
-                notification.style.backgroundColor = 'var(--primary)'; // Rojo para errores
+                notification.style.backgroundColor = 'var(--primary)';
             } else if (type === 'warning') {
-                notification.style.backgroundColor = 'var(--secondary)'; // Naranja para advertencias
+                notification.style.backgroundColor = 'var(--secondary)';
             }
             notification.textContent = message;
             document.body.appendChild(notification);
@@ -2087,7 +2115,7 @@
             cart.forEach(item => {
                 message += `- ${item.displayName || item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString('es-AR')}\n`;
                 if (item.options) {
-                    message += `  (${formatOptions(item.options)})\n`; // Añadir opciones en una nueva línea indentada
+                    message += `  (${formatOptions(item.options)})\n`;
                 }
             });
             
@@ -2113,7 +2141,7 @@
             // Resetear carrito y limpiar campos
             cart = [];
             updateCart();
-            saveCartToLocalStorage(); // Guardar carrito vacío
+            saveCartToLocalStorage();
             checkoutModal.classList.remove('open');
             nameInput.value = '';
             addressInput.value = '';
