@@ -146,17 +146,21 @@
         nav {
             background-color: var(--primary);
             padding: 10px 0;
-            transition: all 0.3s ease;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
         }
 
         .nav-menu {
-            display: flex;
+            display: inline-flex;
             list-style: none;
-            justify-content: space-around;
+            padding: 0;
+            margin: 0;
         }
 
         .nav-menu li {
-            padding: 5px 10px;
+            display: inline-block;
+            padding: 8px 15px;
             border-radius: 4px;
             transition: all 0.3s ease;
         }
@@ -820,30 +824,30 @@
             }
             
             nav {
-                padding: 5px 0; /* Reducir el padding de la barra de navegación */
+                padding: 10px 0;
+                -webkit-overflow-scrolling: touch;
+                overflow-x: auto;
+                white-space: nowrap;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            
+            nav::-webkit-scrollbar {
+                display: none;
             }
 
             .nav-menu {
-                flex-direction: row; /* Mantener en fila */
-                flex-wrap: wrap; /* Permitir que los elementos se envuelvan */
-                justify-content: center; /* Centrar los elementos */
-                padding: 0; /* Eliminar padding extra */
-                position: static; /* Eliminar posicionamiento absoluto */
-                transform: none; /* Eliminar transformaciones */
-                opacity: 1; /* Asegurar visibilidad */
-                pointer-events: all; /* Asegurar interactividad */
+                display: inline-flex;
+                padding-left: 15px;
             }
 
             .nav-menu li {
-                width: auto; /* Ancho automático */
-                text-align: center;
-                margin: 2px 5px; /* Espacio reducido entre elementos */
-                padding: 5px 8px; /* Padding reducido para los botones */
+                padding: 8px 15px;
+                margin-right: 5px;
             }
 
             .nav-menu li a {
-                font-size: 0.8rem; /* Tamaño de fuente más pequeño */
-                padding: 5px; /* Padding reducido para el texto del enlace */
+                font-size: 0.85rem;
             }
             
             .products-grid {
