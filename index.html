@@ -146,10 +146,11 @@
         nav {
             background-color: var(--primary);
             padding: 10px 0;
-            overflow-x: scroll;
+            overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             white-space: nowrap;
             scrollbar-width: none; /* Firefox */
+            overscroll-behavior-x: contain;
         }
         
         nav::-webkit-scrollbar {
@@ -888,9 +889,9 @@
                 flex: 1 1 calc(50% - 5px); /* 2 buttons per row with space */
                 min-width: auto;
                 margin-bottom: 8px;
-                padding: 6px 10px;
-                font-size: 0.8rem;
-                min-height: 32px;
+                padding: 5px 8px;
+                font-size: 0.75rem;
+                min-height: 28px;
             }
 
             .header-right {
