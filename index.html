@@ -878,11 +878,11 @@
             }
             
             .product-buttons {
-                flex-direction: row; /* Botones en fila */
-                flex-wrap: wrap; /* Permite envolver */
+                display: flex;
+                flex-wrap: wrap;
                 gap: 10px;
-                margin-top: auto; /* Empuja hacia abajo */
-                padding-top: 10px; /* Espacio arriba */
+                margin-top: auto;
+                padding-top: 10px;
             }
 
             .add-to-cart, .half-half-btn {
@@ -921,6 +921,27 @@
             }
         }
         
+        /* Custom small‑screen fixes */
+        @media (max-width: 600px) {
+            /* Eliminar espacio extra de descripción */
+            .product-description {
+                flex-grow: 0;
+                min-height: auto;
+                margin-bottom: 8px;
+            }
+            /* Botones juntos y más chicos */
+            .product-buttons {
+                display: flex !important;
+                justify-content: space-between;
+                gap: 4px;
+            }
+            .product-buttons button {
+                flex: 1 1 0;
+                font-size: 14px;
+                padding: 8px 0;
+            }
+        }
+
         @media (max-width: 480px) {
             .logo h1 {
                 font-size: 1.5rem;
@@ -963,14 +984,14 @@
                 align-self: flex-start;
             }
 
-            /* Ajustes para botones en móviles pequeños */
+            /* Eliminar stacking de botones en móvil muy chico */
             .product-buttons {
-                flex-direction: column; /* Botones apilados */
+                flex-direction: row !important;
             }
 
             .add-to-cart, .half-half-btn {
-                flex: 1 1 100%; /* Ocupan todo el ancho */
-                width: 100%;
+                flex: 1 1 48% !important;
+                width: auto;
             }
         }
         
