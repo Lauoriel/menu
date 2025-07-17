@@ -44,26 +44,15 @@
         }
 
         /* Header */
-            header {
+        header {
             background-color: var(--dark);
             color: white;
-            /* REMOVIMOS position: sticky */
+            position: sticky;
+            top: 0;
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-.sticky-nav {
-            position: sticky;
-            top: 0; /* Se pegará en la parte superior de la ventana */
-            z-index: 99; /* Debajo del header pero sobre el contenido */
-            background-color: var(--primary);
-            padding: 10px 0;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            white-space: nowrap;
-            scrollbar-width: none;
-            overscroll-behavior-x: contain;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+
         .header-top {
             display: flex;
             justify-content: space-between;
@@ -141,7 +130,7 @@
         }
 
         .hamburger {
-            display: none; /* Oculto por defecto, se mostrará en media query */
+            display: none;
             cursor: pointer;
             font-size: 1.5rem;
             padding: 10px;
@@ -154,18 +143,23 @@
             touch-action: manipulation;
         }
 
-        nav {
+        /* Barra de categorías fija */
+        .sticky-categories {
+            position: sticky;
+            top: 78px; /* Altura del header */
             background-color: var(--primary);
             padding: 10px 0;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             white-space: nowrap;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
             overscroll-behavior-x: contain;
+            z-index: 99;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        nav::-webkit-scrollbar {
-            display: none; /* Hide scrollbar for Chrome/Safari */
+        .sticky-categories::-webkit-scrollbar {
+            display: none;
         }
 
         .nav-menu {
@@ -835,12 +829,15 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            /* Siempre mostrar el menú de navegación en móvil */
-            .hamburger {
-                display: none; /* Ocultamos el ícono de hamburguesa ya que el menú siempre estará visible */
+            .sticky-categories {
+                top: 70px; /* Ajuste para móvil */
             }
             
-            nav {
+            .hamburger {
+                display: none;
+            }
+            
+            .sticky-categories {
                 padding: 10px 0;
                 -webkit-overflow-scrolling: touch;
                 overflow-x: auto;
@@ -849,26 +846,26 @@
                 scrollbar-width: none;
             }
             
-            nav::-webkit-scrollbar {
+            .sticky-categories::-webkit-scrollbar {
                 display: none;
             }
 
             .nav-menu {
                 display: inline-flex;
                 padding-left: 15px;
-                padding-right: 15px; /* Add padding to prevent last item from touching edge */
-                width: max-content; /* Ensure menu expands to fit all items */
+                padding-right: 15px;
+                width: max-content;
             }
 
             .nav-menu li {
                 padding: 8px 15px;
                 margin-right: 10px;
-                flex-shrink: 0; /* Prevent items from shrinking */
+                flex-shrink: 0;
             }
 
             .nav-menu li a {
                 font-size: 0.85rem;
-                user-select: none; /* Prevent text selection when scrolling */
+                user-select: none;
                 -webkit-user-select: none;
             }
             
@@ -889,15 +886,15 @@
             }
             
             .product-buttons {
-                flex-direction: row; /* Botones en fila */
-                flex-wrap: wrap; /* Permite envolver */
+                flex-direction: row;
+                flex-wrap: wrap;
                 gap: 10px;
-                margin-top: auto; /* Empuja hacia abajo */
-                padding-top: 10px; /* Espacio arriba */
+                margin-top: auto;
+                padding-top: 10px;
             }
 
             .add-to-cart, .half-half-btn {
-                flex: 1 1 calc(50% - 5px); /* 2 buttons per row with space */
+                flex: 1 1 calc(50% - 5px);
                 min-width: auto;
                 margin-bottom: 8px;
                 padding: 5px 8px;
@@ -913,9 +910,8 @@
                 display: none;
             }
 
-            /* Nuevos estilos para tarjetas */
             .product-card {
-                min-height: 240px; /* Altura mínima */
+                min-height: 240px;
                 display: flex;
                 flex-direction: column;
             }
@@ -927,12 +923,16 @@
             }
 
             .product-description {
-                flex-grow: 1; /* Ocupa espacio restante */
-                min-height: 60px; /* Altura mínima */
+                flex-grow: 1;
+                min-height: 60px;
             }
         }
         
         @media (max-width: 480px) {
+            .sticky-categories {
+                top: 65px; /* Ajuste para móviles pequeños */
+            }
+            
             .logo h1 {
                 font-size: 1.5rem;
             }
@@ -974,13 +974,12 @@
                 align-self: flex-start;
             }
 
-            /* Ajustes para botones en móviles pequeños */
             .product-buttons {
-                flex-direction: column; /* Botones apilados */
+                flex-direction: column;
             }
 
             .add-to-cart, .half-half-btn {
-                flex: 1 1 100%; /* Ocupan todo el ancho */
+                flex: 1 1 100%;
                 width: 100%;
             }
         }
@@ -1031,25 +1030,26 @@
                         <i class="fas fa-shopping-cart fa-2x"></i>
                         <span class="cart-count">0</span>
                     </div>
-                    <!-- El botón de hamburguesa se mantiene en el HTML, pero su display se controla por CSS -->
                     <div class="hamburger" id="hamburger">
                         <i class="fas fa-bars fa-2x"></i>
                     </div>
                 </div>
             </div>
         </div>
-        <nav id="navMenu">
-            <div class="container">
-                <ul class="nav-menu">
-                    <li class="active" data-category="pizzas"><a href="#pizzas">Pizzas</a></li>
-                    <li data-category="sandwiches"><a href="#sandwiches">Sándwiches</a></li>
-                    <li data-category="minutas"><a href="#minutas">Minutas</a></li>
-                    <li data-category="hamburguesas"><a href="#hamburguesas">Hamburguesas</a></li>
-                    <li data-category="empanadas"><a href="#empanadas">Empanadas</a></li>
-                </ul>
-            </div>
-        </nav>
     </header>
+
+    <!-- Barra de categorías fija -->
+    <div class="sticky-categories" id="navMenu">
+        <div class="container">
+            <ul class="nav-menu">
+                <li class="active" data-category="pizzas"><a href="#pizzas">Pizzas</a></li>
+                <li data-category="sandwiches"><a href="#sandwiches">Sándwiches</a></li>
+                <li data-category="minutas"><a href="#minutas">Minutas</a></li>
+                <li data-category="hamburguesas"><a href="#hamburguesas">Hamburguesas</a></li>
+                <li data-category="empanadas"><a href="#empanadas">Empanadas</a></li>
+            </ul>
+        </div>
+    </div>
 
     <!-- Menu Sections -->
     <main class="container">
@@ -1519,42 +1519,16 @@
             }
         }
 
-        // Función para alternar el menú de navegación (ya no es necesario para el menú principal)
-        function toggleNavMenu(event) {
-            // Esta función ya no es necesaria para el menú principal, ya que siempre estará visible.
-            // Podría usarse si se reintroduce un menú desplegable para otras funcionalidades.
-        }
-
-        // Configurar event listeners
         function setupEventListeners() {
             // Botón de WhatsApp
             whatsappBtn.addEventListener('click', () => {
                 window.open('https://wa.me/5491138309066', '_blank');
             });
-            
-            // Menú hamburguesa (ya no es necesario para el menú principal)
-            // hamburger.addEventListener('click', toggleNavMenu);
-            // hamburger.addEventListener('touchstart', toggleNavMenu);
 
-            // Cerrar menú al hacer clic/tocar fuera de él (ya no es necesario para el menú principal)
-            /*
-            document.addEventListener('click', (e) => {
-                if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('open')) {
-                    navMenu.classList.remove('open');
-                }
-            });
-            document.addEventListener('touchstart', (e) => {
-                if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('open')) {
-                    navMenu.classList.remove('open');
-                }
-            });
-            */
-            
-            // Cerrar menú al hacer clic en un elemento de la lista de navegación
+            // Menú de categorías
             navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
-                    e.preventDefault(); // Prevenir el comportamiento por defecto del enlace
-                    // navMenu.classList.remove('open'); // Ya no es necesario cerrar el menú
+                    e.preventDefault();
                     const category = item.dataset.category;
                     navItems.forEach(i => i.classList.remove('active'));
                     item.classList.add('active');
@@ -1569,7 +1543,6 @@
                 });
                 item.addEventListener('touchstart', (e) => {
                     e.preventDefault(); 
-                    // navMenu.classList.remove('open'); // Ya no es necesario cerrar el menú
                     const category = item.dataset.category;
                     navItems.forEach(i => i.classList.remove('active'));
                     item.classList.add('active');
