@@ -1681,7 +1681,7 @@
 
         function openPizzaModal(product) {
             currentProduct = product;
-            document.getElementById('modalTitle').textContent = `Personaliza tu ${product.name}`;
+            document.getElementById('modalTitle').textContent = `Personaliza tu Pizza Mitad y Mitad`;
             
             // Llenar las opciones de sabores
             half1Select.innerHTML = '';
@@ -1697,12 +1697,12 @@
 
             menuData.pizzas.filter(p => !p.isBarrilete).forEach(pizza => {
                 const option1 = document.createElement('option');
-                option1.value = pizza.name;
+                option1.value = pizza.id; // Guardar ID en lugar del nombre
                 option1.textContent = pizza.name;
                 half1Select.appendChild(option1);
                 
                 const option2 = document.createElement('option');
-                option2.value = pizza.name;
+                option2.value = pizza.id; // Guardar ID en lugar del nombre
                 option2.textContent = pizza.name;
                 half2Select.appendChild(option2);
             });
@@ -1719,15 +1719,21 @@
                 const flavor = document.createElement('div');
                 flavor.className = 'flavor-option';
                 flavor.textContent = pizza.name;
+                flavor.dataset.id = pizza.id;
                 flavor.dataset.name = pizza.name;
+                flavor.dataset.price = pizza.price;
                 
                 flavor.addEventListener('click', () => {
                     if (flavor.classList.contains('selected')) {
                         flavor.classList.remove('selected');
-                        selectedFlavors = selectedFlavors.filter(name => name !== pizza.name);
+                        selectedFlavors = selectedFlavors.filter(p => p.id !== pizza.id);
                     } else if (selectedFlavors.length < 4) {
                         flavor.classList.add('selected');
-                        selectedFlavors.push(pizza.name);
+                        selectedFlavors.push({
+                            id: pizza.id,
+                            name: pizza.name,
+                            price: pizza.price
+                        });
                     } else {
                         showNotification('Ya has seleccionado 4 sabores', 'warning');
                     }
@@ -1740,26 +1746,38 @@
         }
 
         function addHalfPizzaToCart() {
-            const half1 = half1Select.value;
-            const half2 = half2Select.value;
+            const half1Id = parseInt(half1Select.value);
+            const half2Id = parseInt(half2Select.value);
             
-            if (!half1 || !half2) {
+            if (!half1Id || !half2Id) {
                 showNotification('Por favor selecciona ambos sabores', 'error');
                 return;
             }
+            
+            const half1Pizza = menuData.pizzas.find(p => p.id === half1Id);
+            const half2Pizza = menuData.pizzas.find(p => p.id === half2Id);
+            
+            if (!half1Pizza || !half2Pizza) {
+                showNotification('Error al obtener los sabores seleccionados', 'error');
+                return;
+            }
 
-            if (half1 === half2) {
+            if (half1Id === half2Id) {
                 showNotification('Por favor selecciona dos sabores diferentes', 'error');
                 return;
             }
             
+            // Calcular precio como el más caro de las dos mitades
+            const price = Math.max(half1Pizza.price, half2Pizza.price);
+            
             const pizzaItem = {
                 ...currentProduct,
+                price: price,
                 options: {
-                    half1,
-                    half2
+                    half1: half1Pizza.name,
+                    half2: half2Pizza.name
                 },
-                displayName: `Pizza Mitad ${half1} / Mitad ${half2}`
+                displayName: `Pizza Mitad ${half1Pizza.name} / Mitad ${half2Pizza.name}`
             };
             
             addToCart(pizzaItem);
@@ -1772,12 +1790,16 @@
                 return;
             }
             
+            // Calcular el precio como el más caro de los 4 sabores
+            const maxPrice = Math.max(...selectedFlavors.map(f => f.price));
+            
             const pizzaItem = {
                 ...currentProduct,
+                price: maxPrice,
                 options: {
-                    flavors: [...selectedFlavors]
+                    flavors: selectedFlavors.map(f => f.name)
                 },
-                displayName: `Barrilete (${selectedFlavors.join(', ')})`
+                displayName: `Barrilete (${selectedFlavors.map(f => f.name).join(', ')})`
             };
             
             addToCart(pizzaItem);
@@ -1946,6 +1968,11 @@
         function addToCart(product) {
             const existingItem = cart.find(item => {
                 if (item.options) {
+                    // Para pizzas mitad y mitad, comparar por los sabores
+                    if (item.options.half1 && item.options.half2) {
+                        return item.options.half1 === product.options.half1 && 
+                               item.options.half2 === product.options.half2;
+                    }
                     return item.displayName === product.displayName;
                 } else {
                     return item.id === product.id;
@@ -2133,9 +2160,13 @@
             message += `\n*Pedido:*\n`;
             
             cart.forEach(item => {
-                message += `- ${item.displayName || item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString('es-AR')}\n`;
+                message += `- ${item.displayName} x${item.quantity} - $${(item.price * item.quantity).toLocaleString('es-AR')}\n`;
                 if (item.options) {
-                    message += `  (${formatOptions(item.options)})\n`;
+                    if (item.options.half1 && item.options.half2) {
+                        message += `  (Mitad: ${item.options.half1}, Mitad: ${item.options.half2})\n`;
+                    } else {
+                        message += `  (${formatOptions(item.options)})\n`;
+                    }
                 }
             });
             
