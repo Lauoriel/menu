@@ -160,8 +160,9 @@
         .nav-menu {
             display: inline-flex;
             list-style: none;
-            padding: 0;
+            padding: 0 15px; /* Added padding for scroll visibility */
             margin: 0;
+            width: max-content; /* Ensure menu expands to fit all items */
         }
 
         .nav-menu li {
@@ -169,6 +170,7 @@
             padding: 8px 15px;
             border-radius: 4px;
             transition: all 0.3s ease;
+            flex-shrink: 0; /* Prevent items from shrinking */
         }
 
         .nav-menu li:hover, .nav-menu li.active {
@@ -2055,7 +2057,9 @@
             cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
             subtotalEl.textContent = `$${subtotal.toLocaleString('es-AR')}`;
             const deliveryCost = (deliveryType === "delivery" && subtotal > 0) ? 500 : 0;
-            totalEl.textContent = `$${(subtotal + deliveryCost).toLocaleString('es-AR')}`;
+            const total = subtotal + deliveryCost;
+            
+            totalEl.textContent = `$${total.toLocaleString('es-AR')}`;
         }
 
         function formatOptions(options) {
