@@ -832,6 +832,7 @@
         @media (max-width: 768px) {
             .sticky-categories {
                 top: 70px; /* Ajuste para móvil */
+                padding: 8px 0; /* Reducido para área más pequeña */
             }
             
             .hamburger {
@@ -839,7 +840,6 @@
             }
             
             .sticky-categories {
-                padding: 10px 0;
                 -webkit-overflow-scrolling: touch;
                 overflow-x: auto;
                 white-space: nowrap;
@@ -859,15 +859,17 @@
             }
 
             .nav-menu li {
-                padding: 8px 15px;
-                margin-right: 10px;
+                padding: 6px 12px; /* Reducido para área táctil más pequeña */
+                margin-right: 8px; /* Espacio reducido */
                 flex-shrink: 0;
+                border-radius: 3px; /* Bordes más pequeños */
             }
 
             .nav-menu li a {
                 font-size: 0.85rem;
                 user-select: none;
                 -webkit-user-select: none;
+                padding: 3px 5px; /* Padding reducido */
             }
             
             .products-grid {
@@ -887,20 +889,18 @@
             }
             
             .product-buttons {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 10px;
+                flex-direction: column; /* Cambiado a columna */
+                gap: 8px; /* Espacio vertical entre botones */
                 margin-top: auto;
                 padding-top: 10px;
             }
 
             .add-to-cart, .half-half-btn {
-                flex: 1 1 calc(50% - 5px);
-                min-width: auto;
-                margin-bottom: 4px;
-                padding: 3px 4px;
-                font-size: 0.75rem;
-                min-height: 14px;
+                flex: 1;
+                width: 100%; /* Ocupar todo el ancho */
+                min-height: 36px; /* Altura aumentada para mejor tacto */
+                padding: 6px; /* Padding aumentado */
+                font-size: 0.85rem; /* Tamaño de fuente aumentado */
             }
 
             .header-right {
@@ -932,6 +932,7 @@
         @media (max-width: 240px) {
             .sticky-categories {
                 top: 65px; /* Ajuste para móviles pequeños */
+                padding: 6px 0; /* Más reducido */
             }
             
             .logo h1 {
@@ -977,11 +978,22 @@
 
             .product-buttons {
                 flex-direction: column;
+                gap: 5px; /* Menor espacio */
             }
 
             .add-to-cart, .half-half-btn {
-                flex: 1 1 100%;
-                width: 100%;
+                min-height: 32px; /* Altura reducida para pantallas pequeñas */
+                font-size: 0.75rem; /* Fuente más pequeña */
+            }
+            
+            .nav-menu li {
+                padding: 4px 8px; /* Más reducido */
+                margin-right: 5px; /* Menor espacio */
+                font-size: 0.75rem; /* Texto más pequeño */
+            }
+            
+            .nav-menu li a {
+                padding: 2px 4px; /* Padding reducido */
             }
         }
         
