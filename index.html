@@ -44,15 +44,26 @@
         }
 
         /* Header */
-        header {
+            header {
             background-color: var(--dark);
             color: white;
-            position: sticky;
-            top: 0;
+            /* REMOVIMOS position: sticky */
             z-index: 100;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
+.sticky-nav {
+            position: sticky;
+            top: 0; /* Se pegará en la parte superior de la ventana */
+            z-index: 99; /* Debajo del header pero sobre el contenido */
+            background-color: var(--primary);
+            padding: 10px 0;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            white-space: nowrap;
+            scrollbar-width: none;
+            overscroll-behavior-x: contain;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
         .header-top {
             display: flex;
             justify-content: space-between;
