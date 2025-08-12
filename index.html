@@ -35,6 +35,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-text-size-adjust: 100%;
+            touch-action: manipulation; /* Mejora el rendimiento táctil */
         }
 
         .container {
@@ -143,7 +144,7 @@
             touch-action: manipulation;
         }
 
-        /* Barra de categorías fija */
+        /* Barra de categorías fija - MEJORAS PARA MOVILES */
         .sticky-categories {
             position: sticky;
             top: 78px; /* Altura del header */
@@ -156,6 +157,8 @@
             overscroll-behavior-x: contain;
             z-index: 99;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            -ms-overflow-style: none; /* IE and Edge */
+            touch-action: pan-y; /* Evitar conflicto con gestos de zoom */
         }
         
         .sticky-categories::-webkit-scrollbar {
@@ -167,13 +170,16 @@
             list-style: none;
             padding: 0;
             margin: 0;
+            /* Mejora para evitar seleccion accidental */
+            padding: 0 15px;
         }
 
         .nav-menu li {
             display: inline-block;
-            padding: 8px 15px;
+            padding: 12px 15px; /* Aumentado para mejor área táctil */
             border-radius: 4px;
             transition: all 0.3s ease;
+            margin: 0 3px; /* Espaciado entre elementos */
         }
 
         .nav-menu li:hover, .nav-menu li.active {
@@ -189,6 +195,8 @@
             letter-spacing: 1px;
             display: block;
             padding: 5px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
         /* Menu Sections */
@@ -293,24 +301,24 @@
             padding-top: 5px;
         }
 
-    .add-to-cart, .half-half-btn {
-    flex: 1;
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 6px 4px; /* Padding reducido */
-    border-radius: 4px; /* Bordes ligeramente más pequeños */
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.3s ease;
-    font-size: 0.75rem; /* Tamaño de fuente reducido */
-    white-space: nowrap;
-    min-height: 32px; /* Altura mínima reducida */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1; /* Elimina espacio extra vertical */
-}
+        .add-to-cart, .half-half-btn {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 6px; /* Padding aumentado para mejor táctil */
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+            font-size: 0.85rem; /* Tamaño de fuente aumentado */
+            white-space: nowrap;
+            min-height: 36px; /* Altura aumentada para mejor táctil */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+        }
 
         .add-to-cart {
             background: var(--primary);
@@ -374,6 +382,7 @@
             flex-grow: 1;
             overflow-y: auto;
             padding: 15px;
+            -webkit-overflow-scrolling: touch; /* Mejor scroll en iOS */
         }
 
         .empty-cart {
@@ -421,8 +430,8 @@
         }
 
         .quantity-btn {
-            width: 15px;
-            height: 15px;
+            width: 28px; /* Aumentado para mejor táctil */
+            height: 28px; /* Aumentado para mejor táctil */
             border-radius: 50%;
             border: 1px solid var(--gray);
             background: white;
@@ -431,8 +440,8 @@
             justify-content: center;
             cursor: pointer;
             font-size: 1rem;
-            min-width: 15px;
-            min-height: 15px;
+            min-width: 28px;
+            min-height: 28px;
         }
 
         .cart-item-remove {
@@ -517,6 +526,7 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            -webkit-overflow-scrolling: touch; /* Mejor scroll en iOS */
         }
 
         .modal-header {
@@ -859,8 +869,8 @@
             }
 
             .nav-menu li {
-                padding: 6px 12px; /* Reducido para área táctil más pequeña */
-                margin-right: 8px; /* Espacio reducido */
+                padding: 8px 14px; /* Aumentado para mejor táctil */
+                margin-right: 5px; /* Espacio reducido */
                 flex-shrink: 0;
                 border-radius: 3px; /* Bordes más pequeños */
             }
@@ -899,7 +909,7 @@
                 flex: 1;
                 width: 100%; /* Ocupar todo el ancho */
                 min-height: 36px; /* Altura aumentada para mejor tacto */
-                padding: 6px; /* Padding aumentado */
+                padding: 8px; /* Padding aumentado */
                 font-size: 0.85rem; /* Tamaño de fuente aumentado */
             }
 
@@ -927,21 +937,21 @@
                 flex-grow: 1;
                 min-height: 60px;
             }
+
+            /* Mejora para desplazamiento en categorías */
+            .nav-menu li {
+                padding: 10px 15px; /* Más espacio para toques */
+            }
         }
         
-        @media (max-width: 240px) {
-            .sticky-categories {
-                top: 65px; /* Ajuste para móviles pequeños */
-                padding: 6px 0; /* Más reducido */
-            }
-            
+        @media (max-width: 480px) {
             .logo h1 {
                 font-size: 1.5rem;
             }
             
             .products-grid {
                 grid-template-columns: 1fr;
-                gap: 5px;
+                gap: 15px;
             }
             
             .section-title h2 {
@@ -982,18 +992,33 @@
             }
 
             .add-to-cart, .half-half-btn {
-                min-height: 32px; /* Altura reducida para pantallas pequeñas */
-                font-size: 0.75rem; /* Fuente más pequeña */
+                min-height: 36px; /* Altura reducida para pantallas pequeñas */
+                font-size: 0.85rem; /* Fuente más pequeña */
             }
             
             .nav-menu li {
-                padding: 4px 8px; /* Más reducido */
+                padding: 8px 12px; /* Más reducido */
                 margin-right: 5px; /* Menor espacio */
                 font-size: 0.75rem; /* Texto más pequeño */
             }
             
             .nav-menu li a {
                 padding: 2px 4px; /* Padding reducido */
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+            
+            .nav-menu li {
+                padding: 8px 10px;
+                margin-right: 3px;
+            }
+            
+            .nav-menu li a {
+                font-size: 0.7rem;
             }
         }
         
@@ -1051,7 +1076,7 @@
         </div>
     </header>
 
-    <!-- Barra de categorías fija -->
+    <!-- Barra de categorías fija - MEJORADA -->
     <div class="sticky-categories" id="navMenu">
         <div class="container">
             <ul class="nav-menu">
@@ -1477,6 +1502,10 @@
         const qtyJamonQueso = document.getElementById('qtyJamonQueso');
         const addEmpanadaPack = document.getElementById('addEmpanadaPack');
 
+        // Variables para manejar el desplazamiento en la barra de categorías
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isScrolling = false;
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
@@ -1485,7 +1514,41 @@
             setupNewModals();
             loadCartFromLocalStorage();
             updateCart();
+            setupCategoryScroll(); // Nueva función para manejar el scroll
         });
+
+        // Configurar el desplazamiento de categorías para evitar activaciones accidentales
+        function setupCategoryScroll() {
+            const navContainer = document.querySelector('.sticky-categories');
+            
+            navContainer.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isScrolling = false;
+            }, { passive: true });
+
+            navContainer.addEventListener('touchmove', function(e) {
+                if (!isScrolling) {
+                    const touchX = e.touches[0].clientX;
+                    const touchY = e.touches[0].clientY;
+                    const diffX = Math.abs(touchX - touchStartX);
+                    const diffY = Math.abs(touchY - touchStartY);
+                    
+                    // Si el movimiento es más horizontal que vertical, es desplazamiento
+                    if (diffX > diffY) {
+                        isScrolling = true;
+                    }
+                }
+            }, { passive: true });
+
+            navContainer.addEventListener('touchend', function(e) {
+                if (isScrolling) {
+                    // Prevenir clic si fue desplazamiento
+                    e.preventDefault();
+                }
+                isScrolling = false;
+            });
+        }
 
         // Renderizar el menú
         function renderMenu() {
