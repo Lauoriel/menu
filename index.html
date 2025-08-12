@@ -1459,7 +1459,7 @@
         const pizzaModal = document.getElementById('pizzaModal');
         const closePizzaModal = document.getElementById('closePizzaModal');
         const half1Select = document.getElementById('half1');
-        const half2Select = document.getElementById('half2');
+        const half2Select = document = document.getElementById('half2');
         const addHalfPizza = document.getElementById('addHalfPizza');
         
         const barrileteModal = document.getElementById('barrileteModal');
@@ -1506,6 +1506,7 @@
         let touchStartX = 0;
         let touchStartY = 0;
         let isScrolling = false;
+        const SCROLL_THRESHOLD = 10; // Pixeles de movimiento para considerar scroll
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', () => {
@@ -1514,7 +1515,7 @@
             setupNewModals();
             loadCartFromLocalStorage();
             updateCart();
-            setupCategoryScroll(); // Nueva función para manejar el scroll
+            setupCategoryScroll(); 
         });
 
         // Configurar el desplazamiento de categorías para evitar activaciones accidentales
@@ -1524,30 +1525,24 @@
             navContainer.addEventListener('touchstart', function(e) {
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
-                isScrolling = false;
+                isScrolling = false; // Resetear al inicio del toque
             }, { passive: true });
 
             navContainer.addEventListener('touchmove', function(e) {
-                if (!isScrolling) {
-                    const touchX = e.touches[0].clientX;
-                    const touchY = e.touches[0].clientY;
-                    const diffX = Math.abs(touchX - touchStartX);
-                    const diffY = Math.abs(touchY - touchStartY);
-                    
-                    // Si el movimiento es más horizontal que vertical, es desplazamiento
-                    if (diffX > diffY) {
-                        isScrolling = true;
-                    }
+                const touchX = e.touches[0].clientX;
+                const touchY = e.touches[0].clientY;
+                const diffX = Math.abs(touchX - touchStartX);
+                const diffY = Math.abs(touchY - touchStartY);
+                
+                // Si el movimiento horizontal es mayor que el vertical y supera el umbral, es scroll
+                if (diffX > diffY && diffX > SCROLL_THRESHOLD) {
+                    isScrolling = true;
                 }
             }, { passive: true });
 
-            navContainer.addEventListener('touchend', function(e) {
-                if (isScrolling) {
-                    // Prevenir clic si fue desplazamiento
-                    e.preventDefault();
-                }
-                isScrolling = false;
-            });
+            // No necesitamos un touchend específico para prevenir el default aquí,
+            // ya que la lógica de click en navItems se encargará de eso
+            // basándose en la variable isScrolling.
         }
 
         // Renderizar el menú
@@ -1603,24 +1598,45 @@
 
             // Menú de categorías
             navItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    // Solo ejecutar si no estamos en un desplazamiento horizontal
-                    if (!isScrolling) {
+                // Usamos 'touchend' para decidir si fue un click o un scroll
+                item.addEventListener('touchend', (e) => {
+                    // Si se detectó un scroll durante el toque, prevenimos el comportamiento por defecto (click)
+                    if (isScrolling) {
                         e.preventDefault();
-                        const category = item.dataset.category;
-                        navItems.forEach(i => i.classList.remove('active'));
-                        item.classList.add('active');
-                        
-                        categorySections.forEach(section => {
-                            section.classList.remove('active');
-                            if (section.id === category) {
-                                section.classList.add('active');
-                                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                        });
+                        isScrolling = false; // Resetear para el próximo toque
+                        return;
                     }
+
+                    // Si no fue scroll, entonces es un click
+                    e.preventDefault(); // Prevenir el click fantasma
+                    const category = item.dataset.category;
+                    navItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    categorySections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === category) {
+                            section.classList.add('active');
+                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
                 });
-                // El touchstart ya está manejado por setupCategoryScroll para determinar si es scroll o click
+
+                // También mantenemos el evento 'click' para dispositivos de escritorio
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const category = item.dataset.category;
+                    navItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    
+                    categorySections.forEach(section => {
+                        section.classList.remove('active');
+                        if (section.id === category) {
+                            section.classList.add('active');
+                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
             });
 
             // Carrito
