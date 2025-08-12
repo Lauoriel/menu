@@ -320,10 +320,6 @@
             line-height: 1.2;
         }
 
-        .add-to-cart {
-            background: var(--primary);
-        }
-
         .add-to-cart:hover {
             background: var(--primary-dark);
         }
@@ -1459,7 +1455,7 @@
         const pizzaModal = document.getElementById('pizzaModal');
         const closePizzaModal = document.getElementById('closePizzaModal');
         const half1Select = document.getElementById('half1');
-        const half2Select = document = document.getElementById('half2');
+        const half2Select = document.getElementById('half2');
         const addHalfPizza = document.getElementById('addHalfPizza');
         
         const barrileteModal = document.getElementById('barrileteModal');
@@ -1526,7 +1522,7 @@
                 touchStartX = e.touches[0].clientX;
                 touchStartY = e.touches[0].clientY;
                 isScrolling = false; // Resetear al inicio del toque
-            }, { passive: true });
+            }, { passive: true }); // Usar passive: true para no bloquear el scroll por defecto inicialmente
 
             navContainer.addEventListener('touchmove', function(e) {
                 const touchX = e.touches[0].clientX;
@@ -1534,15 +1530,18 @@
                 const diffX = Math.abs(touchX - touchStartX);
                 const diffY = Math.abs(touchY - touchStartY);
                 
-                // Si el movimiento horizontal es mayor que el vertical y supera el umbral, es scroll
+                // Si el movimiento horizontal es mayor que el vertical y supera el umbral
                 if (diffX > diffY && diffX > SCROLL_THRESHOLD) {
                     isScrolling = true;
+                    // No prevenir el default aquí, dejar que el navegador maneje el scroll horizontal
+                    // Esto es clave para iOS, ya que prevenir el default en touchmove puede bloquear el scroll
+                } else if (diffY > diffX && diffY > SCROLL_THRESHOLD) {
+                    // Si el movimiento es predominantemente vertical, no es scroll horizontal
+                    isScrolling = false;
                 }
             }, { passive: true });
 
-            // No necesitamos un touchend específico para prevenir el default aquí,
-            // ya que la lógica de click en navItems se encargará de eso
-            // basándose en la variable isScrolling.
+            // El touchend se encargará de decidir si fue un click o un scroll
         }
 
         // Renderizar el menú
@@ -1601,14 +1600,15 @@
                 // Usamos 'touchend' para decidir si fue un click o un scroll
                 item.addEventListener('touchend', (e) => {
                     // Si se detectó un scroll durante el toque, prevenimos el comportamiento por defecto (click)
+                    // y reseteamos isScrolling para el próximo toque.
                     if (isScrolling) {
-                        e.preventDefault();
-                        isScrolling = false; // Resetear para el próximo toque
+                        e.preventDefault(); // Previene el "click fantasma" después del scroll
+                        isScrolling = false; 
                         return;
                     }
 
                     // Si no fue scroll, entonces es un click
-                    e.preventDefault(); // Prevenir el click fantasma
+                    e.preventDefault(); // Prevenir el click fantasma si no fue scroll pero sí un toque corto
                     const category = item.dataset.category;
                     navItems.forEach(i => i.classList.remove('active'));
                     item.classList.add('active');
@@ -1623,7 +1623,12 @@
                 });
 
                 // También mantenemos el evento 'click' para dispositivos de escritorio
+                // y como fallback para algunos comportamientos táctiles.
                 item.addEventListener('click', (e) => {
+                    // Solo ejecutar si no fue un evento táctil que ya manejamos con touchend
+                    // Esto es para evitar doble activación en algunos navegadores
+                    if (e.detail === 0) return; // e.detail es 0 para eventos sintéticos (generados por touchend)
+
                     e.preventDefault();
                     const category = item.dataset.category;
                     navItems.forEach(i => i.classList.remove('active'));
