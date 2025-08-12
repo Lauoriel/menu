@@ -1604,33 +1604,23 @@
             // Menú de categorías
             navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const category = item.dataset.category;
-                    navItems.forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    
-                    categorySections.forEach(section => {
-                        section.classList.remove('active');
-                        if (section.id === category) {
-                            section.classList.add('active');
-                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                    });
+                    // Solo ejecutar si no estamos en un desplazamiento horizontal
+                    if (!isScrolling) {
+                        e.preventDefault();
+                        const category = item.dataset.category;
+                        navItems.forEach(i => i.classList.remove('active'));
+                        item.classList.add('active');
+                        
+                        categorySections.forEach(section => {
+                            section.classList.remove('active');
+                            if (section.id === category) {
+                                section.classList.add('active');
+                                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        });
+                    }
                 });
-                item.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); 
-                    const category = item.dataset.category;
-                    navItems.forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    
-                    categorySections.forEach(section => {
-                        section.classList.remove('active');
-                        if (section.id === category) {
-                            section.classList.add('active');
-                            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                    });
-                });
+                // El touchstart ya está manejado por setupCategoryScroll para determinar si es scroll o click
             });
 
             // Carrito
