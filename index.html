@@ -22,8 +22,8 @@
     --gray: #95a5a6;
     --success: #27ae60;
     --whatsapp: #25D366;
-    --info: #3498db; /* Added from menu version 1 */
-    --info-dark: #2980b9; /* Added from menu version 1 */
+    --info: #3498db;
+    --info-dark: #2980b9;
 }
 
 * {margin:0; padding:0; box-sizing:border-box;}
@@ -45,14 +45,15 @@ header {
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.logo i {color: var(--primary);}
-.logo h1 {font-size: 1.5rem;}
+.logo i {color: var(--primary); font-size: 1.8rem;}
+.logo h1 {font-size: 1.5rem; font-weight: 600;}
 
 /* BOTONES HEADER */
 .header-right {display: flex; gap: 10px;}
@@ -61,9 +62,12 @@ header {
     padding: 8px 12px;
     border-radius: 30px;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 .cart-icon {background: rgba(255,255,255,0.1);}
+.cart-icon:hover {background: rgba(255,255,255,0.2);}
 .whatsapp-icon {background: var(--whatsapp); color: white;}
+.whatsapp-icon:hover {background: #128C7E;}
 .cart-count {
     background: var(--primary);
     color: white;
@@ -71,16 +75,21 @@ header {
     width: 20px; height: 20px;
     display: flex; align-items: center; justify-content: center;
     font-size: 0.8rem;
+    font-weight: 600;
 }
 
 /* TITULOS DE CATEGORIA */
 .section-title {
     background: white;
-    padding: 10px;
+    padding: 15px;
     border-left: 5px solid var(--primary);
     margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 60px;
+    z-index: 50;
 }
-.section-title h2 {font-size: 1.4rem;}
+.section-title h2 {font-size: 1.4rem; font-weight: 600;}
 
 /* GRID DE PRODUCTOS */
 .products-grid {
@@ -88,6 +97,7 @@ header {
     grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
     gap: 15px;
     margin-top: 10px;
+    padding-bottom: 20px;
 }
 .product-card {
     background: white;
@@ -96,10 +106,17 @@ header {
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
 }
-.product-title {font-weight: 600;}
-.product-description {font-size: 0.85rem; color: var(--gray); flex-grow: 1;}
-.product-price {color: var(--primary); font-weight: 600;}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.product-title {font-weight: 600; font-size: 1.1rem; margin-bottom: 5px;}
+.product-description {font-size: 0.85rem; color: var(--gray); flex-grow: 1; line-height: 1.5;}
+.product-price {color: var(--primary); font-weight: 600; font-size: 1.1rem; margin: 10px 0;}
 .product-buttons {margin-top: 10px; display: flex; flex-direction: column; gap: 5px;}
 .product-buttons button {
     background: var(--primary);
@@ -109,8 +126,17 @@ header {
     border-radius: 4px;
     font-size: 0.9rem;
     cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
 }
-.half-half-btn {background: var(--success);} /* Changed to info for consistency with menu version 1 */
+.product-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.half-half-btn {background: var(--info);} 
+.barrilete-btn {background: var(--success);}
+.empanadas-btn {background: #9b59b6;}
+.sandwich-btn {background: var(--secondary);}
 
 /* CARRITO LATERAL */
 .cart-sidebar {
@@ -119,7 +145,7 @@ header {
     width: 100%; max-width: 400px;
     height: 100%;
     background: white;
-    box-shadow: -4px 0 10px rgba(0,0,0,0.1);
+    box-shadow: -4px 0 15px rgba(0,0,0,0.15);
     display: flex; flex-direction: column;
     transition: right 0.3s;
     z-index: 200;
@@ -131,24 +157,67 @@ header {
     padding: 15px;
     display: flex; justify-content: space-between; align-items: center;
 }
-.cart-items {flex-grow: 1; overflow-y: auto; padding: 15px;}
-.cart-total {padding: 15px; border-top: 1px solid #eee;}
-.total-row {display: flex; justify-content: space-between;}
+.cart-items {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding: 15px;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.cart-item-info {
+    flex: 1;
+}
+.cart-item-name {
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+.cart-item-details {
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+.cart-item-price {
+    font-weight: 600;
+    min-width: 70px;
+    text-align: right;
+}
+.cart-item-remove {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-left: 10px;
+}
+.cart-total {
+    padding: 20px 15px;
+    border-top: 1px solid #eee;
+    background: #f9f9f9;
+}
+.total-row {display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 600; margin-bottom: 15px;}
 
 /* BOTONES FLOTANTES */
 .floating-cart, .floating-top {
     position: fixed;
     bottom: 15px;
     border-radius: 50%;
-    width: 50px; height: 50px;
+    width: 60px; height: 60px;
     display: flex; align-items: center; justify-content: center;
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     cursor: pointer;
     z-index: 300;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
 }
 .floating-cart {right: 15px; background: var(--primary);}
-.floating-top {right: 75px; background: var(--dark);}
+.floating-cart:hover {background: var(--primary-dark); transform: scale(1.05);}
+.floating-top {right: 85px; background: var(--dark);}
+.floating-top:hover {background: #1a252f; transform: scale(1.05);}
 
 /* ANIMACION AL AGREGAR */
 @keyframes cart-bounce {
@@ -163,44 +232,46 @@ header {
     body {background: #121212; color: white;}
     .product-card, .section-title {background: #1e1e1e;}
     .cart-sidebar {background: #1e1e1e; color: white;}
+    .cart-total {background: #1a1a1a;}
+    .floating-cart, .floating-top {box-shadow: 0 3px 10px rgba(0,0,0,0.4);}
 }
 
 /* ESTILOS PARA MODALES */
 .modal {
-    display: none; /* Oculto por defecto */
+    display: none;
     position: fixed;
-    z-index: 1000; /* Por encima de todo */
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Habilitar scroll si el contenido es muy largo */
-    background-color: rgba(0,0,0,0.7); /* Fondo oscuro semitransparente, un poco más oscuro */
+    overflow: auto;
+    background-color: rgba(0,0,0,0.7);
     justify-content: center;
     align-items: center;
     padding: 20px;
-    animation: fadeIn 0.3s ease-out; /* Animación de entrada */
+    animation: fadeIn 0.3s ease-out;
 }
 
 .modal-content {
     background-color: var(--light);
     margin: auto;
-    padding: 30px; /* Más padding */
-    border-radius: 12px; /* Bordes más redondeados */
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* Sombra más pronunciada */
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
     width: 90%;
-    max-width: 550px; /* Un poco más ancho */
+    max-width: 550px;
     position: relative;
     color: var(--dark);
-    animation: slideIn 0.3s ease-out; /* Animación de entrada */
-    border: 1px solid rgba(0,0,0,0.1); /* Borde sutil */
+    animation: slideIn 0.3s ease-out;
+    border: 1px solid rgba(0,0,0,0.1);
 }
 
 .modal-content h3 {
     color: var(--primary);
-    margin-bottom: 20px; /* Más espacio */
+    margin-bottom: 20px;
     text-align: center;
-    font-size: 1.8rem; /* Título más grande */
+    font-size: 1.8rem;
     font-weight: 600;
 }
 
@@ -219,12 +290,12 @@ header {
 .modal-content select,
 .modal-content input[type="text"],
 .modal-content textarea,
-.modal-content input[type="number"] { /* Añadir input number */
+.modal-content input[type="number"] {
     width: 100%;
-    padding: 12px; /* Más padding */
+    padding: 12px;
     margin-bottom: 15px;
     border: 1px solid var(--gray);
-    border-radius: 8px; /* Bordes más redondeados */
+    border-radius: 8px;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     background-color: white;
@@ -238,25 +309,25 @@ header {
 .modal-content input[type="number"]:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3); /* Sombra de enfoque más suave */
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.3);
 }
 
 .modal-buttons {
     display: flex;
     justify-content: flex-end;
-    gap: 12px; /* Más espacio entre botones */
-    margin-top: 25px; /* Más margen superior */
+    gap: 12px;
+    margin-top: 25px;
 }
 
 .modal-buttons button {
-    padding: 12px 25px; /* Más padding */
+    padding: 12px 25px;
     border: none;
-    border-radius: 8px; /* Bordes más redondeados */
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 1.05rem; /* Fuente ligeramente más grande */
+    font-size: 1.05rem;
     font-weight: 500;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .modal-buttons .btn-cancel {
@@ -266,7 +337,7 @@ header {
 
 .modal-buttons .btn-cancel:hover {
     background-color: #7f8c8d;
-    transform: translateY(-2px); /* Efecto hover */
+    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
@@ -277,74 +348,83 @@ header {
 
 .modal-buttons .btn-confirm:hover {
     background-color: var(--primary-dark);
-    transform: translateY(-2px); /* Efecto hover */
+    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .close-button {
     position: absolute;
-    top: 15px; /* Más espacio */
-    right: 20px; /* Más espacio */
-    font-size: 2rem; /* Más grande */
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
     font-weight: bold;
     color: var(--gray);
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .close-button:hover {
     color: var(--dark);
-    transform: rotate(90deg); /* Efecto de rotación */
+    transform: rotate(90deg);
 }
 
 /* Estilos específicos para el selector de barrilete */
 .barrilete-selection {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px; /* Más espacio */
+    gap: 12px;
     margin-bottom: 15px;
 }
 
 /* Estilos para opciones de empanadas */
 .empanada-options {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
     gap: 10px;
     margin-bottom: 20px;
 }
 
-.empanada-options label {
+.empanada-option {
     background-color: #f0f0f0;
-    padding: 10px 15px;
+    padding: 15px;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
+    text-align: center;
+    font-weight: 500;
+    border: 2px solid #ddd;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    font-weight: normal;
-    border: 1px solid #ddd;
+    justify-content: center;
+    min-height: 80px;
 }
 
-.empanada-options label:hover {
+.empanada-option:hover {
     background-color: #e0e0e0;
     border-color: var(--primary);
 }
 
-.empanada-options input[type="radio"] {
-    margin-bottom: 0; /* Resetear margen */
-    width: auto; /* Resetear ancho */
-    accent-color: var(--primary); /* Color del radio button */
+.empanada-option.selected {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
 }
 
-.empanada-options input[type="radio"]:checked + span {
-    font-weight: bold;
+.empanada-option i {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
     color: var(--primary);
+}
+
+.empanada-option.selected i {
+    color: white;
 }
 
 .custom-empanada-inputs {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Columnas flexibles */
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 15px;
     margin-top: 10px;
 }
@@ -354,12 +434,15 @@ header {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-weight: 500;
 }
 
 .custom-empanada-inputs input[type="number"] {
-    width: 70px; /* Ancho fijo para los inputs numéricos */
+    width: 70px;
     text-align: center;
-    margin-bottom: 0; /* Resetear margen */
+    margin-bottom: 0;
+    padding: 10px;
+    font-weight: 600;
 }
 
 /* Animaciones */
@@ -401,12 +484,12 @@ header {
     .close-button:hover {
         color: white;
     }
-    .empanada-options label {
+    .empanada-option {
         background-color: #2c3e50;
         border-color: #34495e;
         color: white;
     }
-    .empanada-options label:hover {
+    .empanada-option:hover {
         background-color: #34495e;
         border-color: var(--primary);
     }
@@ -421,19 +504,18 @@ header {
     padding-top: 5px;
 }
 
-.add-to-cart, .half-half-btn {
+.add-to-cart, .half-half-btn, .barrilete-btn, .empanadas-btn, .sandwich-btn {
     flex: 1;
-    background: var(--primary);
     color: white;
     border: none;
-    padding: 8px 6px; /* Padding aumentado para mejor táctil */
+    padding: 8px 6px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
-    transition: background 0.3s ease;
-    font-size: 0.85rem; /* Tamaño de fuente aumentado */
+    transition: all 0.3s ease;
+    font-size: 0.85rem;
     white-space: nowrap;
-    min-height: 36px; /* Altura aumentada para mejor táctil */
+    min-height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -449,11 +531,35 @@ header {
 }
 
 .half-half-btn {
-    background: var(--info); /* Changed from --success to --info */
+    background: var(--info);
 }
 
 .half-half-btn:hover {
     background: var(--info-dark);
+}
+
+.barrilete-btn {
+    background: var(--success);
+}
+
+.barrilete-btn:hover {
+    background: #219653;
+}
+
+.empanadas-btn {
+    background: #9b59b6;
+}
+
+.empanadas-btn:hover {
+    background: #8e44ad;
+}
+
+.sandwich-btn {
+    background: var(--secondary);
+}
+
+.sandwich-btn:hover {
+    background: #e67e22;
 }
 
 /* Styles for sandwich modal buttons */
@@ -476,23 +582,30 @@ header {
 }
 
 .flavor-option {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
     cursor: pointer;
     text-align: center;
     transition: all 0.2s ease;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: 500;
+}
+
+.flavor-option:hover {
+    background-color: #f0f0f0;
+    border-color: var(--primary);
 }
 
 .flavor-option.selected {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
 }
 
 /* Styles for pack options in empanada pack modal */
@@ -516,34 +629,40 @@ header {
     min-height: 20px;
 }
 
-/* Responsive adjustments from menu version 1 */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .product-buttons {
-        flex-direction: column; /* Cambiado a columna */
-        gap: 8px; /* Espacio vertical entre botones */
+        flex-direction: column;
+        gap: 8px;
         margin-top: auto;
         padding-top: 10px;
     }
 
-    .add-to-cart, .half-half-btn {
+    .add-to-cart, .half-half-btn, .barrilete-btn, .empanadas-btn, .sandwich-btn {
         flex: 1;
-        width: 100%; /* Ocupar todo el ancho */
-        min-height: 36px; /* Altura aumentada para mejor tacto */
-        padding: 8px; /* Padding aumentado */
-        font-size: 0.85rem; /* Tamaño de fuente aumentado */
+        width: 100%;
+        min-height: 36px;
+        padding: 8px;
+        font-size: 0.85rem;
     }
 }
 
 @media (max-width: 480px) {
+    .logo h1 {font-size: 1.3rem;}
+    .section-title h2 {font-size: 1.2rem;}
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
     .product-buttons {
         flex-direction: column;
-        gap: 5px; /* Menor espacio */
+        gap: 5px;
     }
 
-    .add-to-cart, .half-half-btn {
-        min-height: 36px; /* Altura reducida para pantallas pequeñas */
-        font-size: 0.85rem; /* Fuente más pequeña */
+    .add-to-cart, .half-half-btn, .barrilete-btn, .empanadas-btn, .sandwich-btn {
+        min-height: 36px;
+        font-size: 0.85rem;
     }
+    .floating-top {right: 75px;}
 }
 </style>
 </head>
@@ -573,7 +692,7 @@ header {
     <div class="cart-items" id="cartItems"></div>
     <div class="cart-total">
         <div class="total-row"><span>Total:</span> <span id="total">$0</span></div>
-        <button id="checkoutBtn" style="width:100%;padding:10px;background:var(--success);color:white;border:none;border-radius:4px;">Finalizar Compra</button>
+        <button id="checkoutBtn" style="width:100%;padding:12px;background:var(--success);color:white;border:none;border-radius:6px;font-weight:600;font-size:1.1rem;margin-top:10px;">Finalizar Compra</button>
     </div>
 </div>
 
@@ -625,36 +744,41 @@ header {
 <div id="modalEmpanadas" class="modal">
     <div class="modal-content">
         <span class="close-button" data-modal="modalEmpanadas">&times;</span>
-        <h3>Personalizar Docena de Empanadas</h3>
-        <p>Selecciona una opción o arma tu docena:</p>
+        <h3 id="empanadaModalTitle">Personalizar Docena de Empanadas</h3>
+        <p>Selecciona una opción:</p>
 
         <div class="empanada-options">
-            <label>
-                <input type="radio" name="empanadaType" value="predefined_Carne" checked> <span>Carne</span>
-            </label>
-            <label>
-                <input type="radio" name="empanadaType" value="predefined_Pollo"> <span>Pollo</span>
-            </label>
-            <label>
-                <input type="radio" name="empanadaType" value="predefined_Jamon y Queso"> <span>Jamón y Queso</span>
-            </label>
-            <label>
-                <input type="radio" name="empanadaType" value="predefined_Surtidas"> <span>Surtidas</span>
-            </label>
-            <label>
-                <input type="radio" name="empanadaType" value="custom"> <span>Personalizar</span>
-            </label>
+            <div class="empanada-option" data-type="predefined_Carne">
+                <i class="fas fa-drumstick-bite"></i>
+                <span>Carne</span>
+            </div>
+            <div class="empanada-option" data-type="predefined_Pollo">
+                <i class="fas fa-drumstick-bite"></i>
+                <span>Pollo</span>
+            </div>
+            <div class="empanada-option" data-type="predefined_Jamon y Queso">
+                <i class="fas fa-cheese"></i>
+                <span>Jamón y Queso</span>
+            </div>
+            <div class="empanada-option" data-type="predefined_Surtidas">
+                <i class="fas fa-random"></i>
+                <span>Surtidas</span>
+            </div>
+            <div class="empanada-option" data-type="custom">
+                <i class="fas fa-edit"></i>
+                <span>Personalizar</span>
+            </div>
         </div>
 
         <div id="empanadaCustomFields" style="display:none; margin-top: 15px;">
-            <p>Ingresa la cantidad para cada gusto (máximo 12 en total):</p>
+            <p>Selecciona la cantidad para cada gusto:</p>
             <div class="custom-empanada-inputs">
                 <label for="empanadaCarne">Carne:</label>
                 <input type="number" id="empanadaCarne" min="0" max="12" value="0">
-
+                
                 <label for="empanadaPollo">Pollo:</label>
                 <input type="number" id="empanadaPollo" min="0" max="12" value="0">
-
+                
                 <label for="empanadaJyQ">Jamón y Queso:</label>
                 <input type="number" id="empanadaJyQ" min="0" max="12" value="0">
             </div>
@@ -725,9 +849,18 @@ header {
         <span class="close-button" data-modal="empanadaIndividualModal">&times;</span>
         <h3>Selecciona el gusto</h3>
         <div class="flavor-options" id="empanadaIndividualOptions">
-            <div class="flavor-option" data-gusto="carne">Carne</div>
-            <div class="flavor-option" data-gusto="pollo">Pollo</div>
-            <div class="flavor-option" data-gusto="jamon y queso">Jamón y Queso</div>
+            <div class="flavor-option" data-gusto="carne">
+                <i class="fas fa-drumstick-bite"></i>
+                <span>Carne</span>
+            </div>
+            <div class="flavor-option" data-gusto="pollo">
+                <i class="fas fa-drumstick-bite"></i>
+                <span>Pollo</span>
+            </div>
+            <div class="flavor-option" data-gusto="jamon y queso">
+                <i class="fas fa-cheese"></i>
+                <span>Jamón y Queso</span>
+            </div>
         </div>
         <div class="modal-buttons">
             <button class="btn-cancel" data-modal="empanadaIndividualModal">Cancelar</button>
@@ -805,9 +938,10 @@ const floatingCart = document.getElementById('floatingCart');
 const floatingTop = document.getElementById('floatingTop');
 
 // Variables para modales
-let currentMitadPizza = null; // Para almacenar la pizza original seleccionada para mitad y mitad
-let currentProduct = null; // For sandwich and individual empanada modals
-let selectedEmpanadaGusto = null; // For individual empanada modal
+let currentMitadPizza = null;
+let currentProduct = null;
+let selectedEmpanadaGusto = null;
+let selectedEmpanadaType = null;
 
 /* ============================
    3. RENDERIZAR MENÚ VERTICAL
@@ -815,7 +949,6 @@ let selectedEmpanadaGusto = null; // For individual empanada modal
 function renderMenu() {
     for (const category in menuData) {
         const section = document.createElement('section');
-        // Use category name as ID for sections to allow direct linking/scrolling
         section.id = category; 
         section.innerHTML = `
             <div class="section-title"><h2>${category.toUpperCase()}</h2></div>
@@ -856,16 +989,17 @@ function updateCart() {
     });
 
     for (const category in grouped) {
-        cartItems.innerHTML += `<h4 style="margin-top:10px;">${category.toUpperCase()}</h4>`;
+        cartItems.innerHTML += `<h4 style="margin-top:10px; padding-bottom:5px; border-bottom:1px solid #eee;">${category.toUpperCase()}</h4>`;
         grouped[category].forEach((item, idx) => {
             total += item.price;
             cartItems.innerHTML += `
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
-                    <span>${item.name} ${item.details ? `(${item.details})` : ''}</span>
-                    <span>
-                        $${item.price.toLocaleString()}
-                        <button onclick="removeFromCart(${cart.indexOf(item)})" style="margin-left:5px;background:none;border:none;cursor:pointer;">❌</button>
-                    </span>
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        ${item.details ? `<div class="cart-item-details">${item.details}</div>` : ''}
+                    </div>
+                    <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${cart.indexOf(item)})">✕</button>
                 </div>`;
         });
     }
@@ -898,10 +1032,9 @@ function openMitadModal(id) {
 
     document.getElementById('mitadPizzaOriginalName').textContent = currentMitadPizza.name;
     const mitadPizzaSelect = document.getElementById('mitadPizzaSelect');
-    mitadPizzaSelect.innerHTML = ''; // Limpiar opciones anteriores
+    mitadPizzaSelect.innerHTML = '';
 
-    // Filtrar pizzas que no sean barrilete y no sean la misma que la original
-    const availablePizzas = menuData.pizzas.filter(p => p.id !== 19 && p.id !== currentMitadPizza.id); // ID 19 is Barrilete
+    const availablePizzas = menuData.pizzas.filter(p => p.id !== 19 && p.id !== currentMitadPizza.id);
 
     availablePizzas.forEach(pizza => {
         const option = document.createElement('option');
@@ -910,7 +1043,7 @@ function openMitadModal(id) {
         mitadPizzaSelect.appendChild(option);
     });
 
-    document.getElementById('mitadDetails').value = ''; // Limpiar detalles
+    document.getElementById('mitadDetails').value = '';
     openModal('modalMitad');
 }
 
@@ -924,12 +1057,11 @@ document.getElementById('confirmMitad').onclick = () => {
         return;
     }
 
-    // El precio es el de la pizza más cara
     const finalPrice = Math.max(currentMitadPizza.price, selectedPizza.price);
     const productName = `Mitad ${currentMitadPizza.name} / Mitad ${selectedPizza.name}`;
 
     cart.push({
-        id: Date.now(), // ID único para este item combinado
+        id: Date.now(),
         name: productName,
         description: `Combinación de ${currentMitadPizza.name} y ${selectedPizza.name}`,
         price: finalPrice,
@@ -944,7 +1076,7 @@ document.getElementById('confirmMitad').onclick = () => {
 
 // Barrilete
 function openBarrileteModal(id) {
-    const barriletePizzas = menuData.pizzas.filter(p => p.id !== 19); // Excluir el propio barrilete
+    const barriletePizzas = menuData.pizzas.filter(p => p.id !== 19);
     const barrileteSelects = [
         document.getElementById('barrileteSabor1'),
         document.getElementById('barrileteSabor2'),
@@ -953,7 +1085,7 @@ function openBarrileteModal(id) {
     ];
 
     barrileteSelects.forEach(select => {
-        select.innerHTML = ''; // Limpiar opciones
+        select.innerHTML = '';
         barriletePizzas.forEach(pizza => {
             const option = document.createElement('option');
             option.value = pizza.id;
@@ -961,7 +1093,7 @@ function openBarrileteModal(id) {
             select.appendChild(option);
         });
     });
-    document.getElementById('barrileteDetails').value = ''; // Limpiar detalles
+    document.getElementById('barrileteDetails').value = '';
     openModal('modalBarrilete');
 }
 
@@ -982,7 +1114,7 @@ document.getElementById('confirmBarrilete').onclick = () => {
     }
 
     const details = document.getElementById('barrileteDetails').value.trim();
-    const barrileteProduct = menuData.pizzas.find(p => p.id === 19); // Get the Barrilete product for its price
+    const barrileteProduct = menuData.pizzas.find(p => p.id === 19);
 
     const productName = `Barrilete: ${sabor1.name}, ${sabor2.name}, ${sabor3.name}, ${sabor4.name}`;
 
@@ -990,8 +1122,8 @@ document.getElementById('confirmBarrilete').onclick = () => {
         id: Date.now(),
         name: productName,
         description: "Pizza combinada en cuartos",
-        price: barrileteProduct.price, // El precio es el del barrilete
-        category: 'pizzas', // Barrilete is a pizza type
+        price: barrileteProduct.price,
+        category: 'pizzas',
         details: details
     });
     updateCart();
@@ -1005,37 +1137,45 @@ function openEmpanadasModal(id) {
     currentProduct = menuData.empanadas.find(p => p.id === parseInt(id));
     if (!currentProduct) return;
 
+    // Actualizar título del modal
+    document.getElementById('empanadaModalTitle').textContent = `Personalizar ${currentProduct.name}`;
+    
     // Resetear estado del modal
-    document.querySelectorAll('input[name="empanadaType"]').forEach(radio => {
-        if (radio.value === 'predefined_Carne') { // Seleccionar Carne por defecto
-            radio.checked = true;
-        } else {
-            radio.checked = false;
-        }
+    document.querySelectorAll('.empanada-option').forEach(option => {
+        option.classList.remove('selected');
     });
+    
+    // Seleccionar Carne por defecto
+    document.querySelector('.empanada-option[data-type="predefined_Carne"]').classList.add('selected');
+    selectedEmpanadaType = 'predefined_Carne';
+    
     document.getElementById('empanadaCustomFields').style.display = 'none';
     document.getElementById('empanadaCarne').value = 0;
     document.getElementById('empanadaPollo').value = 0;
     document.getElementById('empanadaJyQ').value = 0;
-    document.getElementById('empanadaTotalCount').textContent = 'Total: 0/12'; // Will be updated by updateEmpanadaTotal
+    
+    // Actualizar contador total
+    const packSize = currentProduct.packSize;
+    document.getElementById('empanadaTotalCount').textContent = `Total: 0/${packSize}`;
     document.getElementById('empanadaError').style.display = 'none';
-    document.getElementById('empanadasDetails').value = ''; // Limpiar detalles
-
-    // Update total count display based on currentProduct.packSize
-    document.getElementById('empanadaTotalCount').textContent = `Total: 0/${currentProduct.packSize}`;
+    document.getElementById('empanadasDetails').value = '';
 
     openModal('modalEmpanadas');
 }
 
-// Event listener para los radio buttons de empanadas
-document.querySelectorAll('input[name="empanadaType"]').forEach(radio => {
-    radio.addEventListener('change', (event) => {
-        if (event.target.value === 'custom') {
+// Event listener para los botones de opciones de empanadas
+document.querySelectorAll('.empanada-option').forEach(option => {
+    option.addEventListener('click', () => {
+        document.querySelectorAll('.empanada-option').forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedEmpanadaType = option.dataset.type;
+        
+        if (selectedEmpanadaType === 'custom') {
             document.getElementById('empanadaCustomFields').style.display = 'block';
-            updateEmpanadaTotal(); // Actualizar total al mostrar campos personalizados
+            updateEmpanadaTotal();
         } else {
             document.getElementById('empanadaCustomFields').style.display = 'none';
-            document.getElementById('empanadaError').style.display = 'none'; // Ocultar error si cambia de custom
+            document.getElementById('empanadaError').style.display = 'none';
         }
     });
 });
@@ -1050,7 +1190,7 @@ function updateEmpanadaTotal() {
     const pollo = parseInt(document.getElementById('empanadaPollo').value) || 0;
     const jyq = parseInt(document.getElementById('empanadaJyQ').value) || 0;
     const total = carne + pollo + jyq;
-    const packSize = currentProduct ? currentProduct.packSize : 12; // Default to 12 if currentProduct is not set
+    const packSize = currentProduct ? currentProduct.packSize : 12;
 
     document.getElementById('empanadaTotalCount').textContent = `Total: ${total}/${packSize}`;
 
@@ -1064,23 +1204,22 @@ function updateEmpanadaTotal() {
 }
 
 document.getElementById('confirmEmpanadas').onclick = () => {
-    const selectedOption = document.querySelector('input[name="empanadaType"]:checked').value;
-    const empanadaProduct = currentProduct; // Use currentProduct for docena/media docena
+    if (!currentProduct) return;
+    
     const details = document.getElementById('empanadasDetails').value.trim();
-    let productName = empanadaProduct.name;
-    let productDescription = empanadaProduct.description; // Use description from menuData
-    let itemDetails = ''; // This will be added to the item.details field in cart
+    let productName = currentProduct.name;
+    let itemDetails = '';
 
-    if (selectedOption.startsWith('predefined_')) {
-        const type = selectedOption.split('_')[1];
+    if (selectedEmpanadaType.startsWith('predefined_')) {
+        const type = selectedEmpanadaType.split('_')[1];
         itemDetails = `Gusto: ${type}`;
-        productName = `${empanadaProduct.name} (${type})`;
-    } else if (selectedOption === 'custom') {
+        productName = `${currentProduct.name} (${type})`;
+    } else if (selectedEmpanadaType === 'custom') {
         const carne = parseInt(document.getElementById('empanadaCarne').value) || 0;
         const pollo = parseInt(document.getElementById('empanadaPollo').value) || 0;
         const jyq = parseInt(document.getElementById('empanadaJyQ').value) || 0;
         const total = carne + pollo + jyq;
-        const packSize = empanadaProduct.packSize;
+        const packSize = currentProduct.packSize;
 
         if (total === 0) {
             alert("Por favor, selecciona al menos una empanada para tu pedido personalizado.");
@@ -1091,17 +1230,17 @@ document.getElementById('confirmEmpanadas').onclick = () => {
             return;
         }
 
-        productName = `${empanadaProduct.name} (Personalizada)`;
+        productName = `${currentProduct.name} (Personalizada)`;
         itemDetails = `Carne: ${carne}, Pollo: ${pollo}, Jamón y Queso: ${jyq}`;
     }
 
     cart.push({
         id: Date.now(),
         name: productName,
-        description: productDescription, // Keep original description
-        price: empanadaProduct.price,
+        description: currentProduct.description,
+        price: currentProduct.price,
         category: 'empanadas',
-        details: details ? `${itemDetails}, ${details}` : itemDetails // Combine custom details with user input
+        details: details ? `${itemDetails}, ${details}` : itemDetails
     });
     updateCart();
     closeModal('modalEmpanadas');
@@ -1137,7 +1276,7 @@ document.getElementById('addSandwichWith').onclick = () => {
         id: Date.now(),
         name: `${product.name} con Papas`,
         description: product.description,
-        price: product.price + 1500, // Add 1500 for fries
+        price: product.price + 1500,
         category: 'sandwiches',
         details: 'Con papas'
     });
@@ -1209,16 +1348,17 @@ document.addEventListener('click', e => {
             }
         } else {
             // Default add to cart for products without special options
-            cart.push({...product, category, details: ''}); // Añadir campo details vacío por defecto
+            cart.push({...product, category, details: ''});
             updateCart();
             cartIcon.classList.add('bounce');
             setTimeout(() => cartIcon.classList.remove('bounce'), 400);
         }
     }
+    
     if (e.target.classList.contains('half-half-btn')) openMitadModal(e.target.dataset.id);
-    // Barrilete button is now handled by the general add-to-cart logic for product.isBarrilete
-    // Empanadas button is now handled by the general add-to-cart logic for product.hasOptions
-    // Sandwich button is now handled by the general add-to-cart logic for product.hasOptions
+    if (e.target.classList.contains('barrilete-btn')) openBarrileteModal(e.target.dataset.id);
+    if (e.target.classList.contains('empanadas-btn')) openEmpanadasModal(e.target.dataset.id);
+    if (e.target.classList.contains('sandwich-btn')) openSandwichModal(menuData.sandwiches.find(p => p.id === parseInt(e.target.dataset.id)));
 
     // Cerrar modales al hacer clic en el botón de cerrar
     if (e.target.classList.contains('close-button')) {
