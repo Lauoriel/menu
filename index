@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Menú Don Dionisio - Pizzería</title>
+
+<!-- Iconos y fuentes -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================
+   ESTILOS GENERALES
+   ============================ */
+:root {
+    --primary: #e74c3c;
+    --primary-dark: #c0392b;
+    --secondary: #f39c12;
+    --dark: #2c3e50;
+    --light: #f9f9f9;
+    --gray: #95a5a6;
+    --success: #27ae60;
+    --whatsapp: #25D366;
+}
+
+* {margin:0; padding:0; box-sizing:border-box;}
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+}
+
+/* HEADER */
+header {
+    background: var(--dark);
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo i {color: var(--primary);}
+.logo h1 {font-size: 1.5rem;}
+
+/* BOTONES HEADER */
+.header-right {display: flex; gap: 10px;}
+.cart-icon, .whatsapp-icon {
+    display: flex; align-items: center; gap: 5px;
+    padding: 8px 12px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+.cart-icon {background: rgba(255,255,255,0.1);}
+.whatsapp-icon {background: var(--whatsapp); color: white;}
+.cart-count {
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+}
+
+/* TITULOS DE CATEGORIA */
+.section-title {
+    background: white;
+    padding: 10px;
+    border-left: 5px solid var(--primary);
+    margin-top: 20px;
+}
+.section-title h2 {font-size: 1.4rem;}
+
+/* GRID DE PRODUCTOS */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+.product-card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+.product-title {font-weight: 600;}
+.product-description {font-size: 0.85rem; color: var(--gray); flex-grow: 1;}
+.product-price {color: var(--primary); font-weight: 600;}
+.product-buttons {margin-top: 10px; display: flex; flex-direction: column; gap: 5px;}
+.product-buttons button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.half-half-btn {background: var(--success);}
+
+/* CARRITO LATERAL */
+.cart-sidebar {
+    position: fixed;
+    top: 0; right: -100%;
+    width: 100%; max-width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.1);
+    display: flex; flex-direction: column;
+    transition: right 0.3s;
+    z-index: 200;
+}
+.cart-sidebar.open {right: 0;}
+.cart-header {
+    background: var(--dark);
+    color: white;
+    padding: 15px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.cart-items {flex-grow: 1; overflow-y: auto; padding: 15px;}
+.cart-total {padding: 15px; border-top: 1px solid #eee;}
+.total-row {display: flex; justify-content: space-between;}
+
+/* BOTONES FLOTANTES */
+.floating-cart, .floating-top {
+    position: fixed;
+    bottom: 15px;
+    border-radius: 50%;
+    width: 50px; height: 50px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 300;
+}
+.floating-cart {right: 15px; background: var(--primary);}
+.floating-top {right: 75px; background: var(--dark);}
+
+/* ANIMACION AL AGREGAR */
+@keyframes cart-bounce {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.3);}
+    100% {transform: scale(1);}
+}
+.cart-icon.bounce {animation: cart-bounce 0.4s;}
+
+/* MODO OSCURO AUTOMATICO */
+@media (prefers-color-scheme: dark) {
+    body {background: #121212; color: white;}
+    .product-card, .section-title {background: #1e1e1e;}
+    .cart-sidebar {background: #1e1e1e; color: white;}
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <i class="fas fa-pizza-slice"></i>
+        <h1>Don Dionisio</h1>
+    </div>
+    <div class="header-right">
+        <div class="whatsapp-icon" id="whatsappBtn"><i class="fab fa-whatsapp"></i></div>
+        <div class="cart-icon" id="cartIcon"><i class="fas fa-shopping-cart"></i><span class="cart-count">0</span></div>
+    </div>
+</header>
+
+<main class="container">
+    <!-- Las categorías y productos se generarán dinámicamente -->
+</main>
+
+<!-- Carrito -->
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h3>Tu Pedido</h3>
+        <button id="closeCart" style="background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-total">
+        <div class="total-row"><span>Total:</span> <span id="total">$0</span></div>
+        <button id="checkoutBtn" style="width:100%;padding:10px;background:var(--success);color:white;border:none;border-radius:4px;">Finalizar Compra</button>
+    </div>
+</div>
+
+<!-- Botones flotantes -->
+<div class="floating-cart" id="floatingCart"><i class="fas fa-shopping-cart"></i></div>
+<div class="floating-top" id="floatingTop"><i class="fas fa-arrow-up"></i></div>
+
+<!-- Modales originales -->
+<div id="modalMitad" class="modal">...</div>
+<div id="modalBarrilete" class="modal">...</div>
+<div id="modalEmpanadas" class="modal">...</div>
+<div id="modalCheckout" class="modal">...</div>
+
+<script>
+/* ============================
+   1. CONFIGURACIÓN DEL MENÚ
+   ============================ */
+const menuData = {
+    pizzas: [
+        { id: 1, name: "Muzzarella", description: "Salsa de tomate y muzzarella", price: 8500 },
+        { id: 2, name: "Napolitana", description: "Muzzarella, tomate fresco, ajo y perejil", price: 9500 },
+        { id: 3, name: "Fugazzeta", description: "Muzzarella y cebolla", price: 9000 },
+        { id: 4, name: "Especial", description: "Muzzarella, jamón y morrones", price: 9800 },
+        { id: 5, name: "Calabresa", description: "Muzzarella y longaniza", price: 10000 },
+        // ... el resto de tus pizzas originales
+    ],
+    empanadas: [
+        { id: 6, name: "Docena de empanadas", description: "Elegí tus gustos favoritos", price: 12000 }
+    ],
+    barrilete: [
+        { id: 7, name: "Pizza Barrilete", description: "Pizzas combinadas en cuartos", price: 14000 }
+    ],
+    minutas: [
+        { id: 8, name: "Milanesa con fritas", description: "Carne vacuna, papas fritas", price: 10500 }
+    ]
+    // ... otras categorías que tenías
+};
+
+/* ============================
+   2. VARIABLES GLOBALES
+   ============================ */
+let cart = [];
+const main = document.querySelector('main');
+const cartIcon = document.getElementById('cartIcon');
+const cartSidebar = document.getElementById('cartSidebar');
+const closeCart = document.getElementById('closeCart');
+const cartItems = document.getElementById('cartItems');
+const cartCount = document.querySelector('.cart-count');
+const totalEl = document.getElementById('total');
+const floatingCart = document.getElementById('floatingCart');
+const floatingTop = document.getElementById('floatingTop');
+
+/* ============================
+   3. RENDERIZAR MENÚ VERTICAL
+   ============================ */
+function renderMenu() {
+    for (const category in menuData) {
+        const section = document.createElement('section');
+        section.innerHTML = `
+            <div class="section-title"><h2>${category.toUpperCase()}</h2></div>
+            <div class="products-grid">
+                ${menuData[category].map(item => `
+                    <div class="product-card">
+                        <h3 class="product-title">${item.name}</h3>
+                        <p class="product-description">${item.description}</p>
+                        <div class="product-price">$${item.price.toLocaleString()}</div>
+                        <div class="product-buttons">
+                            <button class="add-to-cart" data-id="${item.id}" data-category="${category}">Agregar</button>
+                            ${category === "pizzas" ? `<button class="half-half-btn" data-id="${item.id}">Mitad y Mitad</button>` : ""}
+                            ${category === "barrilete" ? `<button class="barrilete-btn" data-id="${item.id}">Armar Barrilete</button>` : ""}
+                            ${category === "empanadas" ? `<button class="empanadas-btn" data-id="${item.id}">Personalizar</button>` : ""}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>`;
+        main.appendChild(section);
+    }
+}
+renderMenu();
+
+/* ============================
+   4. CARRITO
+   ============================ */
+function updateCart() {
+    cartCount.textContent = cart.length;
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    // Agrupar por categoría
+    const grouped = {};
+    cart.forEach(item => {
+        if (!grouped[item.category]) grouped[item.category] = [];
+        grouped[item.category].push(item);
+    });
+
+    for (const category in grouped) {
+        cartItems.innerHTML += `<h4 style="margin-top:10px;">${category.toUpperCase()}</h4>`;
+        grouped[category].forEach((item, idx) => {
+            total += item.price;
+            cartItems.innerHTML += `
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                    <span>${item.name}</span>
+                    <span>
+                        $${item.price.toLocaleString()}
+                        <button onclick="removeFromCart(${cart.indexOf(item)})" style="margin-left:5px;">❌</button>
+                    </span>
+                </div>`;
+        });
+    }
+    totalEl.textContent = `$${total.toLocaleString()}`;
+}
+function removeFromCart(index) {
+    cart.splice(index, 1);
+    updateCart();
+}
+
+/* ============================
+   5. FUNCIONES ESPECIALES
+   ============================ */
+// Mitad y Mitad
+function openMitadModal(id) {
+    // Aquí tu modal original adaptado
+    alert("Abrir modal Mitad y Mitad para pizza ID " + id);
+}
+// Barrilete
+function openBarrileteModal(id) {
+    // Aquí tu modal original adaptado
+    alert("Abrir modal Barrilete para ID " + id);
+}
+// Empanadas
+function openEmpanadasModal(id) {
+    // Aquí tu modal original adaptado
+    alert("Abrir modal Empanadas para ID " + id);
+}
+
+/* ============================
+   6. EVENTOS GENERALES
+   ============================ */
+document.addEventListener('click', e => {
+    if (e.target.classList.contains('add-to-cart')) {
+        const id = parseInt(e.target.dataset.id);
+        const category = e.target.dataset.category;
+        const product = menuData[category].find(p => p.id === id);
+        cart.push({...product, category});
+        updateCart();
+        cartIcon.classList.add('bounce');
+        setTimeout(()=>cartIcon.classList.remove('bounce'),400);
+    }
+    if (e.target.classList.contains('half-half-btn')) openMitadModal(e.target.dataset.id);
+    if (e.target.classList.contains('barrilete-btn')) openBarrileteModal(e.target.dataset.id);
+    if (e.target.classList.contains('empanadas-btn')) openEmpanadasModal(e.target.dataset.id);
+});
+cartIcon.onclick = ()=> cartSidebar.classList.add('open');
+floatingCart.onclick = ()=> cartSidebar.classList.add('open');
+closeCart.onclick = ()=> cartSidebar.classList.remove('open');
+floatingTop.onclick = ()=> window.scrollTo({top:0,behavior:'smooth'});
+
+/* ============================
+   7. CHECKOUT POR WHATSAPP
+   ============================ */
+document.getElementById('checkoutBtn').onclick = () => {
+    let total = totalEl.textContent;
+    let message = "🛒 *Nuevo Pedido Don Dionisio*\n\n";
+    cart.forEach(item => {
+        message += `• ${item.name} - $${item.price.toLocaleString()}\n`;
+    });
+    message += `\nTotal: ${total}\n\n`;
+
+    let tipoEntrega = prompt("Tipo de entrega: Retiro o Envío").toLowerCase();
+    if (tipoEntrega === "retiro") {
+        let nombre = prompt("Nombre para retirar:");
+        message += `Retira: ${nombre}`;
+    } else {
+        let direccion = prompt("Dirección:");
+        let entreCalles = prompt("Entre calles:");
+        message += `Dirección: ${direccion} (${entreCalles})`;
+    }
+
+    let url = `https://wa.me/54911XXXXXXX?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+};
+
+</script>
+
+</body>
+</html>
